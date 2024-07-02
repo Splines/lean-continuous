@@ -22,7 +22,7 @@ Definition of a continuous function `f : ℝ → ℝ` on a set `D` at a point `x
 -/
 
 def IsContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) : Prop :=
-  ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, |x - y| < δ → |f x - f y| < ε
+  ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, |x - y| < δ → |f x - f y| < εˇ
 
 /-
 Definition of a continuous function on a set `D`.
@@ -62,6 +62,33 @@ The function `x ↦ x ^ 2` is continuous at every point on all of `ℝ`
 This proof is very verbose. Try to understand what is going on step by step and optimize the argument.
 -/
 
+--Simple start: Every linear Function is continuous
+
+example (x a b : ℝ) (ha: a ≠ 0) : IsContinuousAt Set.univ (fun y ↦ a * y + b) x hx := by
+  intro ε hε
+  let δ : ℝ := ε / |a|
+  use δ
+  have hd: 0 < δ := by positivity
+  refine ⟨hd, ?_⟩
+  intro y _ hyd
+  --Useful "Haves"
+  have h1: 0 ≤ |a| := by sorry --exact abs_pos.mpr ha
+  have h2: |x - y| ≤ δ := by exact le_of_lt hyd
+  have h3: 
+  calc
+    |(a * x + b) - (a * y + b)| = |a * x + b - a * y - b| := by ring_nf
+    _ = |a * x - a * y| := by ring_nf
+    _ = |a * (x - y)| := by ring_nf
+    _ = |a| * |x - y| := abs_mul a (x - y)
+    _ ≤ |a| * δ := mul_le_mul_of_nonneg_left ?_ h1
+
+
+
+
+
+
+
+
 example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
   intro ε hε
   let δ : ℝ := ε / (2 * |x| + 1) ⊓ 1
@@ -71,7 +98,7 @@ example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
   have hd' : δ ≤ 1 := inf_le_right
   have hd'' : δ ≤ ε / (2 * |x| + 1) := inf_le_left
   refine ⟨hd, ?_⟩
-  intro y _ hyd
+  intro y _ hyd --bis hierhin wird das goal auf die Berechnung beschränkt
   have h0 : |y| < |x| + δ := by
     calc |y| = |x + (y - x)| := by ring_nf
           _  ≤ |x| + |y - x| := abs_add x (y - x)
@@ -82,7 +109,7 @@ example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
   have h3 : 0 ≤ |x| + |y| := by positivity
   have h4 : |x - y| ≤ δ := le_of_lt hyd
   have h5 : |x| + |y| < |x| + (|x| + δ) := (Real.add_lt_add_iff_left |x|).mpr h0
-  have h6 : 2 * |x| + δ ≤ 2 * |x| + 1 := (add_le_add_iff_left (2 * |x|)).mpr hd'
+  have h6 : 2 * |x| + δ ≤ 2 * |x| + 1 := (add_le_add_iff_left (2 * |x|)).mpr hd'--bis hier werden alle bei der Berechnung getätigten Schritte bewiesen, dann nurnoch calc (Berechnung durchgeführt)
   calc
     |x ^ 2 - y ^ 2| = |(x + y) * (x - y)|   := by ring_nf
                   _ = |x + y| * |x - y|     := abs_mul (x + y) (x - y)
@@ -104,6 +131,17 @@ Hint: In Lean `1 / x` is also defined for `x = 0`.
 
 example (x : ℝ) (hx : x ≠ 0) : IsContinuousAt { x | x ≠ 0} (fun y ↦ 1 / y) x hx := by
   intro ε hε
+  let δ : ℝ := ε * |x^2| ⊓ |x|/2
+  use δ
+  have hd : 0 < δ := by simp [δ]; positivity
+  refine ⟨hd, ?_⟩
+  intro y _ hyd
+  have h0 : |y| < |x| + δ := by
+    calc |y| = |x + (y - x)| := by ring_nf
+          _  ≤ |x| + |y - x| := abs_add x (y - x)
+          _  ≤ |x| + |x - y| := by rw [abs_sub_comm]
+          _  < |x| + δ       := (Real.add_lt_add_iff_left |x|).mpr hyd
+  have
   sorry
 
 end IsContinuousAt
