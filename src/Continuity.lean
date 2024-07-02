@@ -22,7 +22,7 @@ Definition of a continuous function `f : ℝ → ℝ` on a set `D` at a point `x
 -/
 
 def IsContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) : Prop :=
-  ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, |x - y| < δ → |f x - f y| < εˇ
+  ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, |x - y| < δ → |f x - f y| < ε
 
 /-
 Definition of a continuous function on a set `D`.
@@ -72,23 +72,18 @@ example (x a b : ℝ) (ha: a ≠ 0) : IsContinuousAt Set.univ (fun y ↦ a * y +
   refine ⟨hd, ?_⟩
   intro y _ hyd
   --Useful "Haves"
-  have h1: 0 ≤ |a| := by sorry --exact abs_pos.mpr ha
-  have h2: |x - y| ≤ δ := by exact le_of_lt hyd
-  have h3: 
+  have h1: 0 < |a| := by positivity
   calc
     |(a * x + b) - (a * y + b)| = |a * x + b - a * y - b| := by ring_nf
     _ = |a * x - a * y| := by ring_nf
     _ = |a * (x - y)| := by ring_nf
     _ = |a| * |x - y| := abs_mul a (x - y)
-    _ ≤ |a| * δ := mul_le_mul_of_nonneg_left ?_ h1
+    _ < |a| * δ := (mul_lt_mul_iff_of_pos_left h1).mpr hyd
+    _ = |a| * (ε / |a|) := by exact rfl
+    _ = ε := by field_simp
+/-
 
-
-
-
-
-
-
-
+-/
 example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
   intro ε hε
   let δ : ℝ := ε / (2 * |x| + 1) ⊓ 1
