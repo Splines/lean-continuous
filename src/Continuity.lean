@@ -126,19 +126,30 @@ Hint: In Lean `1 / x` is also defined for `x = 0`.
 
 example (x : ℝ) (hx : x ≠ 0) : IsContinuousAt { x | x ≠ 0} (fun y ↦ 1 / y) x hx := by
   intro ε hε
-  let δ : ℝ := ε * |x^2| ⊓ |x|/2
+  let δ : ℝ := ε * |x| * |x| / 2 ⊓ |x|/2
   use δ
   have hd : 0 < δ := by simp [δ]; positivity
+  have hd' : δ ≤ ε * |x| * |x| / 2 := inf_le_left
   refine ⟨hd, ?_⟩
-  intro y _ hyd
-  have h0 : |y| < |x| + δ := by
-    calc |y| = |x + (y - x)| := by ring_nf
-          _  ≤ |x| + |y - x| := abs_add x (y - x)
-          _  ≤ |x| + |x - y| := by rw [abs_sub_comm]
-          _  < |x| + δ       := (Real.add_lt_add_iff_left |x|).mpr hyd
-  have
-  sorry
-
+  intro y hy hyd
+  have h1: |x| > 0 := by positivity
+  have h2: |y| ≠ 0 := abs_ne_zero.mpr hy
+  have h3: |y| > 0 := by positivity
+  have h4: |x| * |y| > 0 := by exact Real.mul_pos h1 h3
+  have h5: |x| / 2 ≤ |y| := by sorry
+  have h6 : δ ≤ ε * |x| * |x| / 2 := inf_le_left
+  have h7 : 0 ≤ ε * |x| * |x| / 2 := le_trans (le_of_lt hd) h6
+  have h8 : 0 < |x| * (|x| / 2) := by exact mul_pos h1 (half_pos h1)
+  have h9 : |x| * (|x| / 2) ≤ |x| * |y| := mul_le_mul_of_nonneg_left h5 (le_of_lt h1)
+  calc |1/x - 1/y| = |(1 * y - 1 * x) / (x * y)| := by rw [div_sub_div 1 1 hx hy]; ring_nf
+    _ = |(y - x) / (x * y)| := by ring_nf
+    _ = |y - x| / |x * y| := abs_div (y - x) (x * y)
+    _ = |x - y| / |x * y| := by rw [abs_sub_comm]
+    _ = |x - y| / (|x| * |y|) := by sorry
+    _ < δ / (|x| * |y|) := (div_lt_div_right h4).mpr hyd
+    _ ≤ δ / (|x| * |x|/2) := div_le_div _ _ _ _
+    _ ≤ (ε * |x| * |x|/2) / (|x| * |x|/2) := sorry
+    _ = ε := by field_simp
 end IsContinuousAt
 
 /-

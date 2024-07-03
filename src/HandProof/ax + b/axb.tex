@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\section*{Lean Code Documentation}
+
+Gegeben sei die Funktion $f(y) = a \cdot y + b$, wobei $a \neq 0$. Wir wollen zeigen, dass $f$ stetig an jeder Stelle $x \in \mathbb{R}$ ist.
+\textbf{Schritte im Detail:}
+
+1. \textbf{Einführung:}
+   Wir beginnen mit der Definition der Funktion $f(y) = a \cdot y + b$ und der Annahme $a \neq 0$. Ziel ist es zu zeigen, dass $f$ an der Stelle $x$ stetig ist. 
+
+2. \textbf{Einführung der $\varepsilon$-Umgebung:}
+   Sei $\varepsilon > 0$. Wir wählen $\delta = \frac{\varepsilon}{|a|}$.
+   \[
+   \text{Sei } \delta := \frac{\varepsilon}{|a|}.
+   \]
+
+3. \textbf{Existenz von $\delta$:}
+   Da $|a| > 0$, folgt $\delta > 0$.
+   \[
+   0 < \delta := \frac{\varepsilon}{|a|}.
+   \]
+
+4. \textbf{Definition der $\delta$-Umgebung:}
+   Wir zeigen nun, dass für alle $y$ mit $|y - x| < \delta$ die Bedingung $|f(x) - f(y)| < \varepsilon$ erfüllt ist. 
+
+5. \textbf{Berechnung der Differenz:}
+   \begin{align*}
+   |f(x) - f(y)| &= |(a \cdot x + b) - (a \cdot y + b)| \\
+   &= |a \cdot x + b - a \cdot y - b| \\
+   &= |a \cdot x - a \cdot y| \\
+   &= |a \cdot (x - y)| \\
+   &= |a| \cdot |x - y|.
+   \end{align*}
+
+6. \textbf{Schätzung der Differenz:}
+   Da $|x - y| < \delta$ und $\delta = \frac{\varepsilon}{|a|}$, erhalten wir:
+   \[
+   |a| \cdot |x - y| < |a| \cdot \delta = |a| \cdot \frac{\varepsilon}{|a|} = \varepsilon.
+   \]
+
+7. \textbf{Abschluss:}
+   Somit haben wir gezeigt, dass $|f(x) - f(y)| < \varepsilon$ für $|x - y| < \delta$, was die Stetigkeit von $f$ an $x$ beweist.
+
+\end{document}
