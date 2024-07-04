@@ -1,71 +1,44 @@
 \documentclass{article}
-\usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm}
 
 \begin{document}
+\begin{proof}
+Sei \( x \in \mathbb{R} \) mit \( x \neq 0 \) und \( \epsilon > 0 \) gegeben. Wir müssen ein \( \delta > 0 \) finden, so dass für alle \( y \) mit \( 0 < |y - x| < \delta \) gilt, dass \( \left| \frac{1}{y} - \frac{1}{x} \right| < \epsilon \).
 
-\section*{Stetigkeit der Funktion $f(x) = \frac{1}{x}$}
+Setze \( \delta = \min \left( \frac{\epsilon |x|^2}{2}, \frac{|x|}{2} \right) \).
 
-Wir möchten zeigen, dass die Funktion $f(x) = \frac{1}{x}$ für alle $x \in \mathbb{R}$, $x \neq 0$ stetig ist. Das bedeutet, dass für jedes $c \in \mathbb{R}$, $c \neq 0$ die Funktion $f$ an der Stelle $c$ stetig ist.
+\begin{itemize}
+    \item Da \( \epsilon > 0 \) und \( |x| > 0 \), ist \( \delta > 0 \).
+\end{itemize}
 
-\subsection*{Beweis:}
+Sei nun \( y \) mit \( y \neq 0 \) und \( |y - x| < \delta \) gegeben.
 
-Sei $c \in \mathbb{R}$ mit $c \neq 0$. Wir müssen zeigen, dass für jedes $\varepsilon > 0$ ein $\delta > 0$ existiert, sodass für alle $x$ mit $|x - c| < \delta$ gilt:
-\[
-\left| \frac{1}{x} - \frac{1}{c} \right| < \varepsilon.
-\]
+\begin{itemize}
+    \item Zuerst zeigen wir, dass \( \left| \frac{1}{x} - \frac{1}{y} \right| = \left| \frac{y - x}{xy} \right| \):
+    \begin{align*}
+    \left| \frac{1}{x} - \frac{1}{y} \right| &= \left| \frac{y - x}{xy} \right| \\
+    &= \frac{|y - x|}{|x||y|}
+    \end{align*}
 
-\subsubsection*{Wahl von $\delta$:}
+    \item Da \( |y - x| < \delta \leq \frac{|x|}{2} \), folgt \( |y| > \frac{|x|}{2} \):
+    \begin{align*}
+    |y| &= |x + (y - x)| \\
+    &\geq |x| - |y - x| \\
+    &> |x| - \frac{|x|}{2} \\
+    &= \frac{|x|}{2}
+    \end{align*}
 
-Betrachten wir die Differenz:
-\[
-\left| \frac{1}{x} - \frac{1}{c} \right| = \left| \frac{c - x}{xc} \right| = \frac{|c - x|}{|x||c|}.
-\]
+    \item Da \( \delta \leq \frac{\epsilon |x|^2}{2} \), folgt:
+    \begin{align*}
+    \frac{|x - y|}{|x||y|} &< \frac{\delta}{|x| \cdot \frac{|x|}{2}} \\
+    &= \frac{\delta}{\frac{|x|^2}{2}} \\
+    &\leq \frac{\frac{\epsilon |x|^2}{2}}{\frac{|x|^2}{2}} \\
+    &= \epsilon
+    \end{align*}
+\end{itemize}
 
-Wir möchten, dass diese Differenz kleiner als $\varepsilon$ ist:
-\[
-\frac{|c - x|}{|x||c|} < \varepsilon.
-\]
-
-Multiplizieren wir beide Seiten mit $|x||c|$, erhalten wir:
-\[
-|c - x| < \varepsilon |x| |c|.
-\]
-
-Da $|x|$ für $x$ nahe bei $c$ ungefähr $|c|$ ist, können wir annehmen, dass $|x| \geq \frac{|c|}{2}$, wenn $|x - c|$ hinreichend klein ist. Dies folgt, weil $x$ nahe bei $c$ sein muss, wenn $|x - c| < \delta$ für ein geeignetes $\delta$.
-
-Setzen wir dies ein:
-\[
-|c - x| < \varepsilon |c| \cdot \frac{|c|}{2} = \frac{\varepsilon |c|^2}{2}.
-\]
-
-Um dies zu gewährleisten, wählen wir:
-\[
-\delta = \min\left(1, \frac{\varepsilon |c|^2}{2}\right).
-\]
-
-\subsubsection*{Überprüfung:}
-
-Sei $x$ ein beliebiges Element mit $0 < |x - c| < \delta$. Dann gilt:
-\[
-|x - c| < \frac{\varepsilon |c|^2}{2}.
-\]
-
-Da $|x| \geq \frac{|c|}{2}$, haben wir:
-\[
-\frac{|c - x|}{|x||c|} \leq \frac{|c - x|}{\frac{|c|}{2} |c|} = \frac{2 |c - x|}{|c|^2}.
-\]
-
-Daher folgt:
-\[
-\left| \frac{1}{x} - \frac{1}{c} \right| = \frac{|c - x|}{|x||c|} \leq \frac{2 |c - x|}{|c|^2} < \frac{2}{|c|^2} \cdot \frac{\varepsilon |c|^2}{2} = \varepsilon.
-\]
-
-Somit haben wir gezeigt, dass für jedes $\varepsilon > 0$ ein $\delta > 0$ existiert, sodass $|x - c| < \delta$ impliziert:
-\[
-\left| \frac{1}{x} - \frac{1}{c} \right| < \varepsilon.
-\]
-
-Daraus folgt, dass $f(x) = \frac{1}{x}$ an der Stelle $c$ stetig ist.
+Somit haben wir gezeigt, dass für alle \( y \) mit \( y \neq 0 \) und \( |y - x| < \delta \) gilt, dass \( \left| \frac{1}{y} - \frac{1}{x} \right| < \epsilon \). Daher ist \( f \) stetig an \( x \).
+\end{proof}
 
 \end{document}
