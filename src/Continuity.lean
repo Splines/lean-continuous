@@ -64,6 +64,8 @@ This proof is very verbose. Try to understand what is going on step by step and 
 
 --Simple start: Every linear Function is continuous
 
+sorry: hier noch fallunterschiedung einbauen, a = 0, a ≠ 0
+
 example (x a b : ℝ) (ha: a ≠ 0) : IsContinuousAt Set.univ (fun y ↦ a * y + b) x hx := by
   intro ε hε
   let δ : ℝ := ε / |a|
@@ -93,7 +95,7 @@ example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
   have hd' : δ ≤ 1 := inf_le_right
   have hd'' : δ ≤ ε / (2 * |x| + 1) := inf_le_left
   refine ⟨hd, ?_⟩
-  intro y _ hyd --bis hierhin wird das goal auf die Berechnung beschränkt
+  intro y _ hyd
   have h0 : |y| < |x| + δ := by
     calc |y| = |x + (y - x)| := by ring_nf
           _  ≤ |x| + |y - x| := abs_add x (y - x)
@@ -104,7 +106,7 @@ example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
   have h3 : 0 ≤ |x| + |y| := by positivity
   have h4 : |x - y| ≤ δ := le_of_lt hyd
   have h5 : |x| + |y| < |x| + (|x| + δ) := (Real.add_lt_add_iff_left |x|).mpr h0
-  have h6 : 2 * |x| + δ ≤ 2 * |x| + 1 := (add_le_add_iff_left (2 * |x|)).mpr hd'--bis hier werden alle bei der Berechnung getätigten Schritte bewiesen, dann nurnoch calc (Berechnung durchgeführt)
+  have h6 : 2 * |x| + δ ≤ 2 * |x| + 1 := (add_le_add_iff_left (2 * |x|)).mpr hd'
   calc
     |x ^ 2 - y ^ 2| = |(x + y) * (x - y)|   := by ring_nf
                   _ = |x + y| * |x - y|     := abs_mul (x + y) (x - y)
@@ -147,18 +149,16 @@ example (x : ℝ) (hx : x ≠ 0) : IsContinuousAt { x | x ≠ 0} (fun y ↦ 1 / 
       _ ≤ |x| - |x - y| := by linarith [hd'']
       _ ≤ |x - (x - y)| := abs_sub_abs_le_abs_sub x (x - y)
       _ = |y| := by ring_nf
-  have h6 : δ ≤ ε * |x| * |x| / 2 := inf_le_left
-  have h7 : 0 ≤ ε * |x| * |x| / 2 := le_trans (le_of_lt hd) h6
-  have h8 : 0 < |x| * (|x| / 2) := by exact mul_pos h1 (half_pos h1)
-  have h9 : |x| * (|x| / 2) ≤ |x| * |y| := mul_le_mul_of_nonneg_left h5 (le_of_lt h1)
+  have h6 : 0 < |x| * (|x| / 2) := by exact mul_pos h1 (half_pos h1)
+  have h7 : |x| * (|x| / 2) ≤ |x| * |y| := mul_le_mul_of_nonneg_left h5 (le_of_lt h1)
   calc |1/x - 1/y| = |(1 * y - 1 * x) / (x * y)| := by rw [div_sub_div 1 1 hx hy]; ring_nf
     _ = |(y - x) / (x * y)| := by ring_nf
     _ = |y - x| / |x * y| := by rw [abs_div]
     _ = |x - y| / |x * y| := by rw [abs_sub_comm]
     _ = |x - y| / (|x| * |y|) := by rw [abs_mul]
     _ < δ / (|x| * |y|) := (div_lt_div_right h4).mpr hyd
-    _ ≤ δ / (|x| * (|x|/2)) := (div_le_div_left hd h4 h8).mpr h9
-    _ ≤ (ε * |x| * |x|/2) / (|x| * (|x|/2)) := (div_le_div_right h8).mpr hd'
+    _ ≤ δ / (|x| * (|x|/2)) := (div_le_div_left hd h4 h6).mpr h7
+    _ ≤ (ε * |x| * |x|/2) / (|x| * (|x|/2)) := (div_le_div_right h6).mpr hd'
     _ = ε * (|x| * |x|/2) / (|x| * (|x|/2)) := by ring_nf
     _ = ε := by field_simp
 end IsContinuousAt
@@ -181,32 +181,35 @@ theorem cont_sum (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuo
     apply hf x hx (ε / 2)
     simp
     exact hε
-  have hg1 : ∃ δ₂ > 0, ∀ y ∈ D, |x - y| < δ₂ → |g x - g y| < ε/2 := by sorry
-  obtain ⟨δ₁, hδ₁⟩ := hf1  -- as an alternate to the `obtain` tactic, you can use the `choose` tactic (see below)
-  -- choose δ₁ hδ₁ using hf1
+  have hg1 : ∃ δ₂ > 0, ∀ y ∈ D, |x - y| < δ₂ → |g x - g y| < ε/2 := by
+    apply hg x hx (ε / 2)
+    simp
+    exact hε
+  choose δ₁ hδ₁ using hf1
   choose δ₂ hδ₂ using hg1
   use min δ₁ δ₂
   constructor
   · simp
-    sorry
+    constructor
+    · exact hδ₁.1
+    · exact hδ₂.1
   · intro y hy hmin
-    have aux : |f x - f y| < ε/2 := by sorry
+    have f_con : |f x - f y| < ε/2 := by sorry
+    have g_con : |g x - g y| < ε/2 := by sorry
     simp
     calc |f x + g x - (f y + g y)| = |(f x - f y) + (g x - g y)| := by ring_nf
       _ ≤ |f x - f y| + |g x - g y| := by exact abs_add (f x - f y) (g x - g y)
-      _  < ε/2 + ε/2 := by sorry
+      _  < ε/2 + ε/2 := add_lt_add f_con g_con
       _ = ε := by linarith
 
 /-
 Definition of a right continuous function. Can you explain the definition?
 -/
-
 def IsRightContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) : Prop :=
   ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y > x → |x - y| < δ → |f x - f y| < ε
 
 @[simp]
 noncomputable def Heaviside (x : ℝ) : ℝ := if x < 0 then 0 else 1
-
 /- The Heaviside function is right continuous. -/
 example : IsRightContinuousAt Set.univ Heaviside 0 trivial := by
   intro ε hε
@@ -228,8 +231,7 @@ example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
   sorry
 
 /-
-Now define a left continuous function and prove that a function is continuous at `x`
-if and only if it is left and right continuous at `x`!
+Now define a left continuous function and prove that a function is continuous at `x` if and only if it is left and right continuous at `x`!
 
 Hint: You might find the `by_cases` tactic helpful!
 -/
