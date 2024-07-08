@@ -229,8 +229,8 @@ But the Heaviside function is not continuous!
 example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
   intro h_cont
   let ε := (1:ℝ)/2
-  have heps : ε > 0 := by positivity
-  choose δ δ_pos hδ using h_cont ε heps
+  have h0 : ε > 0 := by positivity
+  choose δ δ_pos hδ using h_cont ε h0
   let x := -δ/2
   have h1 : x < 0 := by sorry
   have h2 : x < δ := by sorry
@@ -250,7 +250,8 @@ def IsLeftContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) :
   ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y < x → |x - y| < δ → |f x - f y| < ε
 /-
 -/
-theorem iff (D : Set ℝ) (f: ℝ → ℝ) (hf: IsContinuous D f) : (IsContinuous D f)  := by
+theorem iff (D : Set ℝ) (f: ℝ → ℝ) (x : ℝ) (hx : x ∈ D): IsContinuous D f ↔ (IsLeftContinuousAt D f x hx ∧ IsRightContinuousAt D f x hx) := by
+constructor
 sorry
 /-
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
