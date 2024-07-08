@@ -260,33 +260,8 @@ def IsLeftContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) :
   ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y < x → |x - y| < δ → |f x - f y| < ε
 /-
 -/
-theorem iff_continuous_left_right (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ D) :
-  ContinuousOn f D ↔ (ContinuousWithinAt f (Iic x ∩ D) x ∧ ContinuousWithinAt f (Ici x ∩ D) x) := by
+theorem iff (D : Set ℝ) (f: ℝ → ℝ) (x : ℝ) (hx : x ∈ D): IsContinuous D f ↔ (IsLeftContinuousAt D f x hx ∧ IsRightContinuousAt D f x hx) := by
   constructor
-  -- Proof of the forward direction
-  · intro h
-    split
-    -- Prove left continuity
-    · refine ContinuousWithinAt.mono (h x hx) ?_
-      intro y hy
-      exact ⟨le_of_lt hy.1, hy.2⟩
-    -- Prove right continuity
-    · refine ContinuousWithinAt.mono (h x hx) ?_
-      intro y hy
-      exact ⟨le_of_lt hy.1, hy.2⟩
-
-  -- Proof of the backward direction
-  · rintro ⟨h_left, h_right⟩
-    intro y hy
-    -- Use the definition of continuous on to prove the goal
-    have : ContinuousWithinAt f D y ↔
-           ContinuousWithinAt f (Iio x ∩ D) y ∨ ContinuousWithinAt f (Ioi x ∩ D) y := by
-      sorry  -- Requires intermediate lemmas on the behavior of continuous within at
-
-    cases this.mp (or.inl h_left) with h_left' h_right'
-    · exact h_left'
-    · exact h_right'
-
 /-
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
 -/
