@@ -233,17 +233,24 @@ example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
   choose δ δ_pos hδ using h_cont ε h0
   let x := -δ/2
   have h1 : x < 0 := by
-    apply div_neg_of_neg_of_pos
-    exact neg_lt_zero.mpr δ_pos
-    exact zero_lt_two
-  have h2 : x < δ := by sorry
-  have h3 : |x - 0| < δ := by sorry
+    apply div_neg_of_neg_of_pos (neg_lt_zero.mpr δ_pos) zero_lt_two
+  have h3 : |x - 0| < δ := by
+    simp
+    rewrite [abs_div, abs_neg, abs_of_nonneg, abs_of_nonneg]
+    apply (div_lt_self δ_pos one_lt_two)
+    exact zero_le_two
+    exact le_of_lt δ_pos
   have h4 : |Heaviside x - Heaviside 0| ≥ ε := by
-    calc |Heaviside x - Heaviside 0| = |0 - 1| := by simp[h1]
-      _ = 1 := by simp
-      _ ≥ ε := by sorry
-  have h5 : |Heaviside x - Heaviside 0| < ε := by sorry
-  exact lt_irrefl |Heaviside x - Heaviside 0| (lt_of_lt_of_le h5 h4)
+    simp[h1]
+    norm_num
+  have h5 : |Heaviside x - Heaviside 0| < ε := by
+    rewrite [abs_sub_comm]
+    apply hδ
+    exact trivial
+    rewrite [abs_sub_comm]
+    exact h3
+  have h6 : |Heaviside x - Heaviside 0| < |Heaviside x - Heaviside 0| := lt_of_lt_of_le h5 h4
+  apply lt_irrefl |Heaviside x - Heaviside 0| h6
 /-
 Now define a left continuous function and prove that a function is continuous at `x` if and only if it is left and right continuous at `x`!
 
@@ -253,9 +260,33 @@ def IsLeftContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) :
   ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y < x → |x - y| < δ → |f x - f y| < ε
 /-
 -/
-theorem iff (D : Set ℝ) (f: ℝ → ℝ) (x : ℝ) (hx : x ∈ D): IsContinuous D f ↔ (IsLeftContinuousAt D f x hx ∧ IsRightContinuousAt D f x hx) := by
-constructor
-sorry
+theorem iff_continuous_left_right (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (hx : x ∈ D) :
+  ContinuousOn f D ↔ (ContinuousWithinAt f (Iic x ∩ D) x ∧ ContinuousWithinAt f (Ici x ∩ D) x) := by
+  constructor
+  -- Proof of the forward direction
+  · intro h
+    split
+    -- Prove left continuity
+    · refine ContinuousWithinAt.mono (h x hx) ?_
+      intro y hy
+      exact ⟨le_of_lt hy.1, hy.2⟩
+    -- Prove right continuity
+    · refine ContinuousWithinAt.mono (h x hx) ?_
+      intro y hy
+      exact ⟨le_of_lt hy.1, hy.2⟩
+
+  -- Proof of the backward direction
+  · rintro ⟨h_left, h_right⟩
+    intro y hy
+    -- Use the definition of continuous on to prove the goal
+    have : ContinuousWithinAt f D y ↔
+           ContinuousWithinAt f (Iio x ∩ D) y ∨ ContinuousWithinAt f (Ioi x ∩ D) y := by
+      sorry  -- Requires intermediate lemmas on the behavior of continuous within at
+
+    cases this.mp (or.inl h_left) with h_left' h_right'
+    · exact h_left'
+    · exact h_right'
+
 /-
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
 -/
