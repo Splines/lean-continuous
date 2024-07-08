@@ -232,15 +232,18 @@ example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
   have h0 : ε > 0 := by positivity
   choose δ δ_pos hδ using h_cont ε h0
   let x := -δ/2
-  have h1 : x < 0 := by sorry
+  have h1 : x < 0 := by
+    apply div_neg_of_neg_of_pos
+    exact neg_lt_zero.mpr δ_pos
+    exact zero_lt_two
   have h2 : x < δ := by sorry
   have h3 : |x - 0| < δ := by sorry
   have h4 : |Heaviside x - Heaviside 0| ≥ ε := by
     calc |Heaviside x - Heaviside 0| = |0 - 1| := by simp[h1]
-      _ = 1 := by sorry
+      _ = 1 := by simp
       _ ≥ ε := by sorry
   have h5 : |Heaviside x - Heaviside 0| < ε := by sorry
-  sorry
+  exact lt_irrefl |Heaviside x - Heaviside 0| (lt_of_lt_of_le h5 h4)
 /-
 Now define a left continuous function and prove that a function is continuous at `x` if and only if it is left and right continuous at `x`!
 
