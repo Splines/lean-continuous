@@ -201,7 +201,6 @@ theorem cont_sum (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuo
       _ ≤ |f x - f y| + |g x - g y| := by exact abs_add (f x - f y) (g x - g y)
       _  < ε/2 + ε/2 := add_lt_add f_con g_con
       _ = ε := by linarith
-
 /-
 Definition of a right continuous function. Can you explain the definition?
 -/
@@ -228,14 +227,33 @@ But the Heaviside function is not continuous!
 -/
 
 example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
+  intro h_cont
+  let ε := (1:ℝ)/2
+  have heps : ε > 0 := by positivity
+  choose δ δ_pos hδ using h_cont ε heps
+  let x := -δ/2
+  have h1 : x < 0 := by sorry
+  have h2 : x < δ := by sorry
+  have h3 : |x - 0| < δ := by sorry
+  have h4 : |Heaviside x - Heaviside 0| ≥ ε := by
+    calc |Heaviside x - Heaviside 0| = |0 - 1| := by simp[h1]
+      _ = 1 := by sorry
+      _ ≥ ε := by sorry
+  have h5 : |Heaviside x - Heaviside 0| < ε := by sorry
   sorry
-
 /-
 Now define a left continuous function and prove that a function is continuous at `x` if and only if it is left and right continuous at `x`!
 
 Hint: You might find the `by_cases` tactic helpful!
 -/
-
+def IsLeftContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) : Prop :=
+  ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y < x → |x - y| < δ → |f x - f y| < ε
+/-
+-/
+theorem iff (D : Set ℝ) (f: ℝ → ℝ) (hf: IsContinuous D f) : (IsContinuous D f)  := by
+sorry
 /-
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
 -/
+theorem cont_mul (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f * g) := by
+  sorry
