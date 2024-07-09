@@ -305,23 +305,49 @@ Try to adapt the proof that the sum of continuous functions is continuous to sho
 -/
 theorem cont_mul (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f * g) := by
   intro x hx
-  have hf1 : ∃ δ₁ > 0, ∀ y ∈ D, |x - y| < δ₁ → |f x - f y| < ε₁ := by
-    sorry
-  have hg1 : ∃ δ₂ > 0, ∀ y ∈ D, |x - y| < δ₂ → |g x - g y| < ε₂ := by
-    sorry
-  obtain ⟨δ₁, hδ₁⟩ := hf1
-  obtain ⟨δ₂, hδ₂⟩ := hg1
-  let ε := |ε₁ * ε₂| + |ε₁ * g y| + |f y * ε₂|
-  have hε : ε > 0 := by sorry
-  calc |(f * g) x - (f * g) y| = |f x * g x - f y * g y| := by sorry
-    _ = |f x * g x - f y * g x + f y * g x - f y * g y| := by sorry
-    _ = |(f x - f y) * g x + f y * (g x - g y)| := by sorry
-    _ ≤ |(f x - f y) * g x| + |f y * (g x - g y)| := by sorry
-    _ < |ε₁ * g x| + |f y * ε₂| := by sorry
-    _ = |ε₁ * (g x - g y + g y)| + |f y * ε₂| := by sorry
-    _ = |ε₁ * (g x - g y) + ε₁ * g y| + |f y * ε₂| := by sorry
-    _ ≤ |ε₁ * (g x - g y)| + |ε₁ * g y| + |f y * ε₂| := by sorry
-    _ < |ε₁ * ε₂| + |ε₁ * g y| + |f y * ε₂| := by sorry
-    - = ε := by sorry
-
-a
+  intro ε hε
+  dsimp [IsContinuousAt]
+  have hf1 : ∃ δ₁ > 0, ∀ y ∈ D, |x - y| < δ₁ → |f x - f y| < ε /(2 * |g y| + 1) := by sorry
+    /-apply hf x hx (ε / (2 * |g x| + 1))
+    simp
+    apply div_pos hε
+    apply mul_pos zero_lt_two
+    apply add_pos_of_nonneg_of_pos
+    exact abs_nonneg (g x)
+    exact zero_lt_one
+    -/
+  have hg1 : ∃ δ₂ > 0, ∀ y ∈ D, |x - y| < δ₂ → |g x - g y| < ε / (2 * (ε +|f y|)) := by sorry
+    /- apply hg x hx (ε / (2 * (ε +|f x|)))
+    simp
+    apply div_pos hε
+    apply mul_pos zero_lt_two
+    apply add_pos_of_pos_of_nonneg hε
+    apply abs_nonneg
+    -/
+  obtain ⟨δ₁, δ₁_pos, hδ₁⟩ := hf1
+  obtain ⟨δ₂, δ₂_pos, hδ₂⟩ := hg1
+  let δ := min δ₁ δ₂
+  use δ
+  constructor
+  · apply lt_min δ₁_pos δ₂_pos
+  · intros y hy hδ
+    have h1 : |f x - f y| < ε / (2 * |g y| + 1) := by
+      apply hδ₁ y hy
+      exact lt_of_lt_of_le hδ (min_le_left δ₁ δ₂)
+    have h2 : |g y - g x| < ε / (2 * (ε + |f y|)) := by sorry
+      --apply hδ₂ y hy
+      --exact lt_of_lt_of_le hδ (min_le_right δ₁ δ₂)
+    have h3 : |f x| - |f y| < ε := by
+      calc |f x| - |f y| ≤ |f x - f y| := by exact f (f (f (f x)))
+        _ < ε / (2 * |g y| + 1) := h1
+        _ ≤ ε := div_le_div_left (le_of_lt hε)
+    calc |(f * g) x - (f * g) y| = |f x * g x - f y * g y| := by sorry
+       _ = |f x * g x - f x * g y + f x * g y - f y * g y| := by sorry
+       _ = |f x * (g x - g y) + (f x - f y) * g y| := by sorry
+       _ ≤ |f x * (g x - g y)| + |(f x - f y) * g y| := by sorry
+       _ = |f x| * |g x - g y| + |f x - f y| * |g y| := by sorry
+       _ = (ε + |f y|) * |g x - g y| + |f x - f y| * |g y| := by sorry
+       _ < (ε + |f y|) * ε / (2 * (ε +|f y|)) + ε /(2 * |g y| + 1) * |g y| := by sorry
+       _ < (ε + |f y|) * ε / (2 * (ε +|f y|)) + ε /(2 * |g y|) * |g y| := by sorry
+       _ = ε/2 + ε/2 := by sorry
+       _ = ε := by ring_nf
