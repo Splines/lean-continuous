@@ -87,7 +87,7 @@ example (x a b : ℝ) (hx : x ∈ Set.univ): IsContinuousAt Set.univ (fun y ↦ 
       funext
       simp [azero]
     simp [hf, azero]
-    sorry 
+    sorry
 /-
 
 -/
@@ -304,4 +304,24 @@ theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: ℝ → ℝ) (x : �
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
 -/
 theorem cont_mul (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f * g) := by
-  sorry
+  intro x hx
+  have hf1 : ∃ δ₁ > 0, ∀ y ∈ D, |x - y| < δ₁ → |f x - f y| < ε₁ := by
+    sorry
+  have hg1 : ∃ δ₂ > 0, ∀ y ∈ D, |x - y| < δ₂ → |g x - g y| < ε₂ := by
+    sorry
+  obtain ⟨δ₁, hδ₁⟩ := hf1
+  obtain ⟨δ₂, hδ₂⟩ := hg1
+  let ε := |ε₁ * ε₂| + |ε₁ * g y| + |f y * ε₂|
+  have hε : ε > 0 := by sorry
+  calc |(f * g) x - (f * g) y| = |f x * g x - f y * g y| := by sorry
+    _ = |f x * g x - f y * g x + f y * g x - f y * g y| := by sorry
+    _ = |(f x - f y) * g x + f y * (g x - g y)| := by sorry
+    _ ≤ |(f x - f y) * g x| + |f y * (g x - g y)| := by sorry
+    _ < |ε₁ * g x| + |f y * ε₂| := by sorry
+    _ = |ε₁ * (g x - g y + g y)| + |f y * ε₂| := by sorry
+    _ = |ε₁ * (g x - g y) + ε₁ * g y| + |f y * ε₂| := by sorry
+    _ ≤ |ε₁ * (g x - g y)| + |ε₁ * g y| + |f y * ε₂| := by sorry
+    _ < |ε₁ * ε₂| + |ε₁ * g y| + |f y * ε₂| := by sorry
+    - = ε := by sorry
+
+a
