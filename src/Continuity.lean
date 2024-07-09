@@ -338,9 +338,9 @@ theorem cont_mul (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuo
       --apply hδ₂ y hy
       --exact lt_of_lt_of_le hδ (min_le_right δ₁ δ₂)
     have h3 : |f x| - |f y| < ε := by
-      calc |f x| - |f y| ≤ |f x - f y| := by exact f (f (f (f x)))
-        _ < ε / (2 * |g y| + 1) := h1
-        _ ≤ ε := div_le_div_left (le_of_lt hε)
+      calc |f x| - |f y| ≤ |f x - f y| := by sorry
+        --_ < ε / (2 * |g y| + 1) := h1
+        --_ ≤ ε := div_le_div_left (le_of_lt hε)
     calc |(f * g) x - (f * g) y| = |f x * g x - f y * g y| := by sorry
        _ = |f x * g x - f x * g y + f x * g y - f y * g y| := by sorry
        _ = |f x * (g x - g y) + (f x - f y) * g y| := by sorry
