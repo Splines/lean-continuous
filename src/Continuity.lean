@@ -163,14 +163,6 @@ example (x : ℝ) (hx : x ≠ 0) : IsContinuousAt { x | x ≠ 0} (fun y ↦ 1 / 
     _ = ε := by field_simp
 end IsContinuousAt
 /-
-If you want to read the documentation of a specific tactic, you can use:
--/
-
-#help tactic absurd
-
--- #help tactic choose
-
-/-
 The sum of continuous functions is continuous. Can you complete the proof below (remove the sorries)?
 -/
 
@@ -225,7 +217,6 @@ example : IsRightContinuousAt Set.univ Heaviside 0 trivial := by
 /-
 But the Heaviside function is not continuous!
 -/
-
 example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
   intro h_cont
   let ε := (1:ℝ)/2
@@ -258,10 +249,52 @@ Hint: You might find the `by_cases` tactic helpful!
 -/
 def IsLeftContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) : Prop :=
   ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y < x → |x - y| < δ → |f x - f y| < ε
+@[simp]
 /-
 -/
-theorem iff (D : Set ℝ) (f: ℝ → ℝ) (x : ℝ) (hx : x ∈ D): IsContinuous D f ↔ (IsLeftContinuousAt D f x hx ∧ IsRightContinuousAt D f x hx) := by
+theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: ℝ → ℝ) (x : ℝ) (hx : x ∈ D): (IsContinuousAt D f x hx) ↔ (IsLeftContinuousAt D f x hx ∧ IsRightContinuousAt D f x hx) := by
   constructor
+  -- left side implies right side
+  · intro h
+    constructor
+    · intro ε hε
+      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith)--warum brauche ich hier linarith? Obtain nochmal untersuchen
+      use δ
+      constructor
+      · exact hδ
+      · intros y hy yltx
+        exact hδ_prop y hy
+    · intro ε hε
+      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith) --warum brauche ich hier linarith? Obtain nochmal untersuchen
+      use δ
+      constructor
+      · exact hδ
+      · intros y hy hyx
+        exact hδ_prop y hy
+  -- right side implies left side
+  · intro h
+    rcases h with ⟨l, r⟩
+    intro ε hε
+    obtain ⟨δ₁, hδ₁, hδ₁_prop⟩ := l (ε) (by linarith)
+    obtain ⟨δ₂, hδ₂, hδ₂_prop⟩ := r (ε) (by linarith)
+    use min δ₁ δ₂
+    constructor
+    · apply lt_min hδ₁ hδ₂
+    · intro y hy hyδ
+      by_cases hyx : y < x
+      · apply hδ₁_prop y hy hyx
+        apply lt_of_lt_of_le hyδ
+        apply min_le_left
+      · push_neg at hyx
+        · by_cases hex : y = x
+          · rewrite [hex]
+            simp [abs_zero, hε]
+          · have h0 : x < y := by
+              push_neg at hex
+              exact lt_of_le_of_ne hyx (id (Ne.symm hex))
+            apply hδ₂_prop y hy h0
+            apply lt_of_lt_of_le hyδ
+            apply min_le_right
 /-
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
 -/
