@@ -1,0 +1,44 @@
+{
+    "files.exclude": {
+        "**/__pycache__/": true,
+        "**/_minted-main": true
+    },
+    "latex-workshop.latex.tools": [
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "--shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "pdflatex",
+            "tools": [
+                "pdflatex"
+            ]
+        }
+    ],
+    "editor.wordWrapColumn": 80,
+    "cSpell.language": "en,de-DE",
+    "cSpell.words": [
+        "Adiabatenkoeffizient",
+        "Analysierspalt",
+        "Beugungsbild",
+        "Beugungsbildes",
+        "Beugungsstruktur",
+        "durchfluss",
+        "Figurenachse",
+        "Intensitätsverteilung",
+        "Isochore",
+        "Kohärenzlänge",
+        "mittelwelligen",
+        "resultwizard",
+        "Verdrängerkolben"
+    ]
+}

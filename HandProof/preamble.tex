@@ -1,0 +1,84 @@
+% adjust the page sizes to your likings
+\usepackage[left=3.5cm,right=3.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[american]{babel}
+\usepackage[T1]{fontenc} % allow west-european symbols (also umlauts: ä, ö, ü)
+
+% Graphics & Color
+\usepackage[table]{xcolor}
+\definecolor{heidelberg-red}{HTML}{E50A37}
+\usepackage{graphicx}
+
+\usepackage{ulem} % for underlining via \uline{...}
+\usepackage{csquotes} % for \enquote{}
+\usepackage{float} % for floating images
+\usepackage[bottom]{footmisc} % keep footnotes at the bottom of the page
+\usepackage{setspace} % to have the \setstretch{baselinestrech} command available
+\usepackage{ragged2e} % text alignment
+\usepackage[parfill]{parskip} % no indentation for paragraphs, instead add spacing
+\usepackage{pdfpages} %for including pdf
+\usepackage{rotating}
+\usepackage{tikz-cd}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{makecell} % https://tex.stackexchange.com/a/176780
+\usepackage{arydshln} % Draw dash-lines in array/tabular
+\usepackage{subcaption}
+
+
+% Easy tables, e.g. for coloring columns as seen here.
+% https://tex.stackexchange.com/a/613906/
+% \usepackage{tabularray}
+
+% Math & Physics
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{cancel}
+
+% Code
+\usepackage{listings}
+% \usepackage{minted}
+
+% Chemics
+\usepackage{chemformula}
+% \setchemformula{circled=all}
+
+\usepackage{witharrows} % http://mirrors.ibiblio.org/CTAN/macros/generic/witharrows/witharrows.pdf
+\usepackage{nicefrac} % usage: \nicefrac{nominator}{denominator}
+\usepackage{physics}
+\usepackage{siunitx}
+\sisetup{
+	locale=DE,
+	group-separator={,},
+	group-digits=integer,
+	per-mode=symbol,
+	separate-uncertainty=true
+}
+\usepackage{empheq} % boxed equations: https://trucastuces.wordpress.com/2012/10/10/boxed-equations-in-latex/
+
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+% we use the option hidelinks here to avoid ugly borders around clickable items, e.g. links and cross-references
+\usepackage{hyperref} % clickable links
+\hypersetup{
+	colorlinks = true,
+	linkcolor={red!50!black}, % Color of internal links
+	% citecolor={blue!50!black}, % Color of citations
+	urlcolor={blue!80!black} % Color for external hyperlinks
+}
+\usepackage{todonotes}
+\setlength {\marginparwidth }{2cm}      % margin for todo notes
+\usepackage[nameinlink]{cleveref}
+
+\let\qty\SI % see "bug" (warning) in https://tex.stackexchange.com/a/628184
+
+% Enumerations
+\usepackage{enumitem}
+% Enumerate lists as a) b) instead of 1. 2.
+\setenumerate[0]{label=\textbf{\alph*)}}
+% remove indentation of enumerate environment
+\setlist{leftmargin=*}

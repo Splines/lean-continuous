@@ -1,0 +1,50 @@
+\documentclass[10pt,a4paper,usenglish]{article}
+\input{preamble}
+\input{defs}
+\input{prettify-math}
+
+% Meta values
+\newcommand{\subject}{Continuous Functions}
+\newcommand{\subjectshort}{Continuous Functions}
+\newcommand{\authors}{Felix Lentze \& Dominic Plein}
+\newcommand{\experimentdate}{July 10th, 2024}
+
+% Header
+\pagestyle{fancy}
+\lhead{\subjectshort}
+\rhead{}
+
+\setstretch{1.25}
+
+\begin{document}
+\setlength{\abovedisplayskip}{0.2em}
+%\setlength{\belowdisplayskip}{0pt}
+%\setlength{\abovedisplayshortskip}{0pt}
+%\setlength{\belowdisplayshortskip}{0pt}
+
+\thispagestyle{plain} % empty header, footer contains page number
+
+% smaller top margin on first page
+\vspace*{-2cm}
+
+\begin{FlushLeft}
+    \LARGE \textbf{\subject} \vspace{1mm}\linebreak
+    \normalsize	\authors \vspace{1mm}\linebreak
+    \small Date: \experimentdate
+
+    \textcolor{heidelberg-red}{\rule{\linewidth}{1mm}}
+\end{FlushLeft}
+
+% Content
+% \setcounter{section}{1}
+\tableofcontents
+\pagebreak
+\input{content/continuous.tex}
+\pagebreak
+\input{content/axb.tex}
+\pagebreak
+\input{content/y^2_continuous.tex}
+\pagebreak
+\input{content/1fraqy.tex}
+
+\end{document}
