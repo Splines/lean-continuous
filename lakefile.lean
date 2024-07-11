@@ -1,7 +1,7 @@
 import Lake
 open Lake DSL
 
-package «leanproject» where
+package «continuity» where
   -- Settings applied to both builds and interactive editing
   leanOptions := #[
     ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
@@ -17,5 +17,5 @@ require mdgen from git
     -- use it running `lake exe mdgen <input_dir> <output_dir>`
 
 @[default_target]
-lean_lib «Leanproject» where
+lean_lib «Continuity» where
   -- add any library configuration options here
