@@ -4,7 +4,7 @@
 > This is a research project and not stable code.
 
 > [!tip]
-> - [Library Style Guidelines](Library Style Guidelines)
+> - [Library Style Guidelines](https://leanprover-community.github.io/contribute/style.html)
 > - [Documentation style](https://leanprover-community.github.io/contribute/doc.html)
 
 Run `lake exec cache get` in the root of this project. Don't run `lake update` as we want to stick with the specific version of Lean specified pinned via the `lake-manifest.json` in the [CompAssistedMath2024](https://github.com/matematiflo/CompAssistedMath2024) repository.
