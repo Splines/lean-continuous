@@ -1,8 +1,38 @@
 {
-    "files.exclude": {
-        "**/__pycache__/": true,
-        "**/_minted-main": true
-    },
+    //////////////////////////////////////
+    // Files
+    //////////////////////////////////////
+    "files.exclude": {},
+    //////////////////////////////////////
+    // Editor
+    //////////////////////////////////////
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 100, // toggle via Alt + Z shortcut
+    "editor.mouseWheelZoom": true,
+    "editor.rulers": [
+        {
+            "column": 80, // soft limit
+            "color": "#e5e5e5"
+        },
+        {
+            "column": 100, // hard limit
+            "color": "#c9c9c9"
+        }
+    ],
+    //////////////////////////////////////
+    // Git
+    //////////////////////////////////////
+    "git.inputValidation": true,
+    "git.inputValidationSubjectLength": 50,
+    "git.inputValidationLength": 72,
+    //////////////////////////////////////
+    // Spell Checker
+    //////////////////////////////////////
+    "cSpell.language": "en,de-DE",
+    "cSpell.words": [],
+    //////////////////////////////////////
+    // LaTeX
+    //////////////////////////////////////
     "latex-workshop.latex.tools": [
         {
             "name": "pdflatex",
@@ -23,22 +53,5 @@
                 "pdflatex"
             ]
         }
-    ],
-    "editor.wordWrapColumn": 80,
-    "cSpell.language": "en,de-DE",
-    "cSpell.words": [
-        "Adiabatenkoeffizient",
-        "Analysierspalt",
-        "Beugungsbild",
-        "Beugungsbildes",
-        "Beugungsstruktur",
-        "durchfluss",
-        "Figurenachse",
-        "Intensitätsverteilung",
-        "Isochore",
-        "Kohärenzlänge",
-        "mittelwelligen",
-        "resultwizard",
-        "Verdrängerkolben"
     ]
 }
