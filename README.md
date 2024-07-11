@@ -3,12 +3,16 @@
 > [!warning]
 > This is a research project and not stable code.
 
+> [!tip]
+> - [Library Style Guidelines](Library Style Guidelines)
+> - [Documentation style](https://leanprover-community.github.io/contribute/doc.html)
+
 Run `lake exec cache get` in the root of this project. Don't run `lake update` as we want to stick with the specific version of Lean specified pinned via the `lake-manifest.json` in the [CompAssistedMath2024](https://github.com/matematiflo/CompAssistedMath2024) repository.
 
 
 ---
 
-Readme from [here](https://github.com/matematiflo/CompAssistedMath2024/blob/main/Lean/Projects/02.%20Continuity%20of%20real%20functions%20(Analysis%201)/Continuity.md).
+Readme taken from [here](https://github.com/matematiflo/CompAssistedMath2024/blob/main/Lean/Projects/02.%20Continuity%20of%20real%20functions%20(Analysis%201)/Continuity.md).
 
 By Judith Ludwig, Christian Merten and Florent Schaffhauser,
 Proseminar on computer-assisted mathematics,
