@@ -26,4 +26,4 @@ def IsContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
 
 /-- Definition of a continuous function on a set `D`. -/
 def IsContinuous (D : Set ℝ) (f : D → ℝ) : Prop :=
-  ∀ (a : D), IsContinuousAt D f a
+  ∀ a : D, IsContinuousAt D f a
