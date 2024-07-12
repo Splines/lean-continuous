@@ -1,8 +1,9 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Continuity.continuous
 
-
+--------------------------------------------------------------------------------
 -- # Constant function `x ↦ c` with `c ∈ ℝ`
+--------------------------------------------------------------------------------
 
 /-- The constant function is continuous (at any given point). -/
 theorem constant_function_is_continuous_at_a_point
@@ -34,7 +35,9 @@ theorem constant_function_is_continuous
   exact constant_function_is_continuous_at_a_point D c a
 
 
+--------------------------------------------------------------------------------
 -- # Function `x ↦ m * x + y₀` with `m, y₀ ∈ ℝ`
+--------------------------------------------------------------------------------
 
 /-- The function `x ↦ m * x + y₀` is continuous (at any given point). -/
 theorem lines_are_continuous_at_a_point
@@ -73,5 +76,8 @@ theorem lines_are_continuous
   exact lines_are_continuous_at_a_point D m y₀ a
 
 
+--------------------------------------------------------------------------------
 -- # Parabola `x ↦ x^2`
+--------------------------------------------------------------------------------
+
 -- /-- The parabola `x ↦ x^2` is continuous. -/
