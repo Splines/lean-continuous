@@ -6,35 +6,6 @@ The function `x ↦ x ^ 2` is continuous at every point on all of `ℝ`
 
 This proof is very verbose. Try to understand what is going on step by step and optimize the argument.
 -/
-
---Simple start: Every linear Function is continuous
-
-example (x a b : ℝ) (hx : x ∈ Set.univ): IsContinuousAt Set.univ (fun y ↦ a * y + b) x hx := by
-  intro ε hε
-  by_cases azero : a ≠ 0
-  · let δ : ℝ := ε / |a|
-    use δ
-    have hd: 0 < δ := by positivity
-    refine ⟨hd, ?_⟩
-    intro y _ hyd
-    --Useful "Haves"
-    have h1: 0 < |a| := by positivity
-    calc
-     |(a * x + b) - (a * y + b)| = |a * x + b - a * y - b| := by ring_nf
-      _ = |a * x - a * y| := by ring_nf
-      _ = |a * (x - y)| := by ring_nf
-      _ = |a| * |x - y| := abs_mul a (x - y)
-      _ < |a| * δ := (mul_lt_mul_iff_of_pos_left h1).mpr hyd
-      _ = |a| * (ε / |a|) := by exact rfl
-      _ = ε := by field_simp
-  · push_neg at azero
-    have hf: (fun y => a * y + b) = (fun y => b) := by
-      funext
-      simp [azero]
-    simp [hf, azero]
-    sorry
-/-
-
 -/
 example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
   intro ε hε
