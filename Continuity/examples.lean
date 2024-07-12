@@ -6,7 +6,7 @@ import Continuity.continuous
 -- # Constant function `x ↦ c` with `c ∈ ℝ`
 --------------------------------------------------------------------------------
 
-/-- The constant function is continuous (at any given point `a ∈ D ⊆ ℝ`). -/
+/-- The constant function is continuous (at a given point `a ∈ D ⊆ ℝ`). -/
 theorem constant_function_is_continuous_at_a_point
     (D : Set ℝ) (c : ℝ) (a : D)
     : IsContinuousAt D (fun _ ↦ c) a := by
@@ -40,7 +40,7 @@ theorem constant_function_is_continuous
 -- # Function `x ↦ m * x + y₀` with `m, y₀ ∈ ℝ`
 --------------------------------------------------------------------------------
 
-/-- The function `x ↦ m * x + y₀` is continuous (at any given point `a ∈ D ⊆ ℝ`). -/
+/-- The function `x ↦ m * x + y₀` is continuous (at a given point `a ∈ D ⊆ ℝ`). -/
 theorem lines_are_continuous_at_a_point
     (D : Set ℝ) (m y₀ : ℝ) (a : D)
     : IsContinuousAt D (fun x ↦ m * x + y₀) a := by
@@ -81,7 +81,7 @@ theorem lines_are_continuous
 -- # Parabola `x ↦ x^2`
 --------------------------------------------------------------------------------
 
-/-- The function `x ↦ x^2` is continuous (at any given point `a ∈ D ⊆ ℝ`). -/
+/-- The function `x ↦ x^2` is continuous (at a given point `a ∈ D ⊆ ℝ`). -/
 theorem parabola_is_continuous_at_a_point
     (D : Set ℝ) (a : D)
     : IsContinuousAt D (fun x ↦ x^2) a := by
@@ -139,3 +139,11 @@ theorem parabola_is_continuous_at_a_point
 
     _ = ε
       := by field_simp
+
+/-- The function `x ↦ x^2` is continuous. -/
+theorem parabola_is_continuous
+    (D : Set ℝ)
+    : IsContinuous D (fun x ↦ x^2) := by
+
+  intro a
+  exact parabola_is_continuous_at_a_point D a
