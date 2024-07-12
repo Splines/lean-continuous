@@ -1,85 +1,30 @@
 \subsection{The parabola is continuous}
 
-Sei $f(x) = x^2$. Wir beweisen, dass $f$ an jeder Stelle $x \in \mathbb{R}$ stetig ist. 
-\textbf{Vorbereitende Schritte:}
+\begin{theorem}
+   Let $f: \R \to \R$ be defined by $f(x) \coloneqq x^2$. That is, $f$ is a parabola. Then $f$ is continuous at every point $a \in \R$.
+\end{theorem}
 
-1. \textbf{Definition von $\delta$:}
-   \[
-   \delta = \min\left(\frac{\epsilon}{2|x| + 1}, 1\right)
-   \]
-   Diese Wahl von $\delta$ stellt sicher, dass $\delta > 0$ und $\delta \leq 1$.
+\begin{proof}
+   Let $a \in \R$ be an arbitrary point where we want to show that $f: \R \to \R, \: x \mapsto x^2$ is continuous.
 
-2. \textbf{Positivität von $\delta$:}
-   \[
-   0 < \delta
-   \]
-   Da $\epsilon > 0$ und $2|x| + 1 > 0$, folgt $0 < \frac{\epsilon}{2|x| + 1}$. Somit ist $\delta > 0$.
+   Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \min\left(\frac{\epsilon}{2|x| + 1}, 1\right)$. Since $\epsilon > 0$ and $2|x| + 1 > 0$ and $1 > 0$, we have $\delta > 0$.
 
-3. \textbf{Obere Schranke von $\delta$:}
-   \[
-   \delta \leq 1
-   \]
-   Dies folgt direkt aus der Definition von $\delta$.
+   Let $x \in \R$ and $|x - a| < \delta$. Then:
+   \begin{eqarrows*}
+      |f(x) - f(a)| &= |x^2 - a^2| = |(x + a)(x - a)| \\
+                    &= |x + a| \cdot |x - a|
+                    \Arrow{$|x + a| \leq |x| + |a|$}\\
+                    &\leq \bigl(|x| + |a|\bigr) \cdot |x - a|
+                    \Arrow{$|x-a| < \delta$ and $|a| < |x| + \delta$ (*)}\\
+                    &< \bigl(|x| + (|x| + \delta)\bigr) \cdot \delta \\
+                    &= \bigl(2|x| + \delta\bigr) \cdot \delta
+                    \Arrow{$\delta \leq 1$ and
+                    $\displaystyle\delta \leq \frac{\epsilon}{2|x| + 1}$}\\
+                    &\leq \bigl(2|x| + 1\bigr) \cdot \frac{\epsilon}{2|x| + 1} \\
+                    &= \epsilon
+   \end{eqarrows*}
 
-4. \textbf{Weitere obere Schranke von $\delta$:}
-   \[
-   \delta \leq \frac{\epsilon}{2|x| + 1}
-   \]
-   Auch dies folgt direkt aus der Definition von $\delta$.
+   (*) is true because $|a| = |x + (a - x)| \leq |x| + |a - x| = |x| + |x - a| < |x| + \delta$. Therefore, $|a| < |x| + \delta$.
 
-5. \textbf{Beziehung zwischen $|y|$ und $|x|$:}
-   \[
-   |y| < |x| + \delta
-   \]
-   Da $|y| = |x + (y - x)| \leq |x| + |y - x|$ und $|y - x| < \delta$, folgt $|y| < |x| + \delta$.
-
-6. \textbf{Beziehung zwischen $|x + y|$ und $|x| + |y|$:}
-   \[
-   |x + y| \leq |x| + |y|
-   \]
-   Dies ist eine Anwendung der Dreiecksungleichung.
-
-7. \textbf{Nichtnegativität von $|x - y|$:}
-   \[
-   0 \leq |x - y|
-   \]
-   Da $|x - y|$ der Betrag einer reellen Zahl ist, ist er nicht negativ.
-
-8. \textbf{Obere Schranke von $|x - y|$:}
-   \[
-   |x - y| \leq \delta
-   \]
-   Da $|y - x| < \delta$, folgt $|x - y| = |y - x| < \delta$.
-
-9. \textbf{Beziehung zwischen $|x| + |y|$ und $|x| + (|x| + \delta)$:}
-   \[
-   |x| + |y| < |x| + (|x| + \delta)
-   \]
-   Da $|y| < |x| + \delta$, folgt $|x| + |y| < |x| + (|x| + \delta)$.
-
-10. \textbf{Beziehung zwischen $2|x| + \delta$ und $2|x| + 1$:}
-    \[
-    2|x| + \delta \leq 2|x| + 1
-    \]
-    Da $\delta \leq 1$, folgt $2|x| + \delta \leq 2|x| + 1$.
-
-\textbf{Beweis:}
-
-Sei $\epsilon > 0$ gegeben. Wir wählen $\delta$ als $\delta = \min\left(\frac{\epsilon}{2|x| + 1}, 1\right)$. Nach den obigen vorbereitenden Schritten wissen wir, dass $0 < \delta$.
-
-Sei $|y - x| < \delta$. Wir müssen zeigen, dass $|y^2 - x^2| < \epsilon$.
-
-\begin{align*}
-|y^2 - x^2| &= |(y + x)(y - x)| & \text{(Ringregel)} \\
-            &= |y + x| \cdot |y - x| & \text{(Absorptionsregel)} \\
-            &\leq (|x| + |y|) \cdot |y - x| & \text{(Anwendung von Schritt 6)} \\
-            &\leq (|x| + (|x| + \delta)) \cdot \delta & \text{(Anwendung von Schritt 5 und 8)} \\
-            &= (2|x| + \delta) \cdot \delta \\
-            &\leq (2|x| + 1) \cdot \delta & \text{(Anwendung von Schritt 10)} \\
-            &\leq (2|x| + 1) \cdot \frac{\epsilon}{2|x| + 1} & \text{(Anwendung von Schritt 4)} \\
-            &= \epsilon & \text{(Feldregel)}
-\end{align*}
-
-Daraus folgt, dass $|y^2 - x^2| < \epsilon$.
-
-\hfill $\blacksquare$
+   The argument shows that $|f(x) - f(a)| < \epsilon$, which proves the continuity of $f$ at $a$.
+\end{proof}
