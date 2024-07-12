@@ -1,8 +1,10 @@
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Continuity.continuous
 /-
 The sum of continuous functions is continuous. Can you complete the proof below (remove the sorries)?
 -/
 
-theorem cont_sum (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f + g) := by
+theorem cont_sum (D : Set ℝ) (f: D → ℝ) (g: D → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f + g) := by
   intro x hx
   intro ε hε
   have hf1 : ∃ δ₁ > 0, ∀ y ∈ D, |x - y| < δ₁ → |f x - f y| < ε/2 := by
@@ -34,7 +36,7 @@ theorem cont_sum (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuo
 /-
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
 -/
-theorem cont_mul (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f * g) := by
+theorem cont_mul (D : Set ℝ) (f: D → ℝ) (g: D → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f * g) := by
   intro x hx
   intro ε hε
   dsimp [IsContinuousAt]
@@ -66,8 +68,8 @@ theorem cont_mul (D : Set ℝ) (f: ℝ → ℝ) (g: ℝ → ℝ) (hf: IsContinuo
       apply hδ₁ y hy
       exact lt_of_lt_of_le hδ (min_le_left δ₁ δ₂)
     have h2 : |g y - g x| < ε / (2 * (ε + |f y|)) := by sorry
-      --apply hδ₂ y hy
-      --exact lt_of_lt_of_le hδ (min_le_right δ₁ δ₂)
+      apply hδ₂ y hy
+      exact lt_of_lt_of_le hδ (min_le_right δ₁ δ₂)
     have h3 : |f x| - |f y| < ε := by
       calc |f x| - |f y| ≤ |f x - f y| := by sorry
         --_ < ε / (2 * |g y| + 1) := h1
