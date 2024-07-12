@@ -7,7 +7,7 @@
 \begin{proof}
    Let $a \in \R$ be an arbitrary point where we want to show that $f: \R \to \R, \: x \mapsto x^2$ is continuous.
 
-   Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \min\left(\frac{\epsilon}{2|x| + 1}, 1\right)$. Since $\epsilon > 0$ and $2|x| + 1 > 0$ and $1 > 0$, we have $\delta > 0$.
+   Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \min\left(\frac{\epsilon}{2|a| + 1}, 1\right)$. Since $\epsilon > 0$ and $2|a| + 1 > 0$ and $1 > 0$, we have $\delta > 0$.
 
    Let $x \in \R$ and $|x - a| < \delta$. Then:
    \begin{eqarrows*}
@@ -17,16 +17,16 @@
                     &\leq \bigl(|x| + |a|\bigr) \cdot |x - a|
                     \Arrow{$|x-a| < \delta$}\\
                     &\leq \bigl(|x| + |a|\bigr) \cdot \delta
-                    \Arrow{$|a| < |x| + \delta$ (*)}\\
-                    &< \bigl(|x| + (|x| + \delta)\bigr) \cdot \delta \\
-                    &= \bigl(2|x| + \delta\bigr) \cdot \delta
+                    \Arrow{$|x| < |a| + \delta$ (*)}\\
+                    &< \bigl((|a| + \delta) + |a|\bigr) \cdot \delta \\
+                    &= \bigl(2|a| + \delta\bigr) \cdot \delta
                     \Arrow{$\delta \leq 1$ and
-                    $\displaystyle\delta \leq \frac{\epsilon}{2|x| + 1}$}\\
-                    &\leq \bigl(2|x| + 1\bigr) \cdot \frac{\epsilon}{2|x| + 1} \\
+                    $\displaystyle\delta \leq \frac{\epsilon}{2|a| + 1}$}\\
+                    &\leq \bigl(2|a| + 1\bigr) \cdot \frac{\epsilon}{2|a| + 1} \\
                     &= \epsilon
    \end{eqarrows*}
 
-   (*) is true because $|a| = |x + (a - x)| \leq |x| + |a - x| = |x| + |x - a| < |x| + \delta$. Therefore, $|a| < |x| + \delta$.
+   (*) is true because $|x| = |a + (x - a)| \leq |a| + |x - a| < |a| + \delta$. Therefore, $|x| < |a| + \delta$.
 
    The argument shows that $|f(x) - f(a)| < \epsilon$, which proves the continuity of $f$ at $a$.
 \end{proof}

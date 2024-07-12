@@ -91,11 +91,11 @@ theorem parabola_is_continuous_at_a_point
   intro ε h_εbigger0
 
   -- `δ` and its upper bounds
-  let δ := ε / (2 * |x'| + 1) ⊓ 1
+  let δ := ε / (2 * |a'| + 1) ⊓ 1
   use δ
   have h_δbigger0 : δ > 0 := by simp [δ]; positivity
   have h_δsmaller1 : δ ≤ 1 := inf_le_right
-  have h_δsmallerε : δ ≤ ε / (2 * |x'| + 1) := inf_le_left
+  have h_δsmallerε : δ ≤ ε / (2 * |a'| + 1) := inf_le_left
   simp only [h_δbigger0, true_and]
 
   intro x h_xδ_criterion
@@ -103,13 +103,12 @@ theorem parabola_is_continuous_at_a_point
 
   -- Some inequalities for the calculation
   have h_triangle_inequality : |x' + a'| ≤ |x'| + |a'| := abs_add x' a'
-  have h_asmaller : |a'| < (|x'| + δ) := by calc
-    |a'| = |x' + (a' - x')|  := by ring_nf
-      _ <= |x'| + |a' - x'|  := abs_add x' (a' - x')
-      _ = |x'| + |x' - a'|   := by rw [abs_sub_comm]
-      _ < |x'| + δ           := (Real.add_lt_add_iff_left |x'|).mpr h_xδ_criterion
-  have h_asmaller_with_added_term : |x'| + |a'| < |x'| + (|x'| + δ)
-    := (Real.add_lt_add_iff_left |x'|).mpr h_asmaller
+  have h_x_smaller : |x'| < (|a'| + δ) := by calc
+    |x'| = |a' + (x' - a')|  := by ring_nf
+      _ <= |a'| + |x' - a'|  := abs_add a' (x' - a')
+      _ < |a'| + δ           := by linarith [h_xδ_criterion]
+  have h_x_smaller_with_added_term : |x'| + |a'| < (|a'| + δ) + |a'|
+    := by linarith [h_x_smaller]
 
   calc |x'^2 - a'^2|
 
@@ -125,16 +124,16 @@ theorem parabola_is_continuous_at_a_point
     _ ≤ (|x'| + |a'|) * δ
       := mul_le_mul_of_nonneg_left (le_of_lt h_xδ_criterion) (by positivity)
 
-    _ < (|x'| + (|x'| + δ)) * δ
-      := (mul_lt_mul_iff_of_pos_right h_δbigger0).mpr h_asmaller_with_added_term
+    _ < ((|a'| + δ) + |a'| ) * δ
+      := (mul_lt_mul_iff_of_pos_right h_δbigger0).mpr h_x_smaller_with_added_term
 
-    _ = (2 * |x'| + δ) * δ
+    _ = (2 * |a'| + δ) * δ
       := by ring_nf
 
-    _ ≤ (2 * |x'| + 1) * δ
-      := (mul_le_mul_iff_of_pos_right h_δbigger0).mpr (by linarith)
+    _ ≤ (2 * |a'| + 1) * δ
+      := (mul_le_mul_iff_of_pos_right h_δbigger0).mpr (by linarith [h_δsmaller1])
 
-    _ ≤ (2 * |x'| + 1) * (ε / (2 * |x'| + 1))
+    _ ≤ (2 * |a'| + 1) * (ε / (2 * |a'| + 1))
       := mul_le_mul_of_nonneg_left h_δsmallerε (by positivity)
 
     _ = ε
