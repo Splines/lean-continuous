@@ -10,7 +10,8 @@
    Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \min\left(\frac{\epsilon}{2|a| + 1}, 1\right)$. Since $\epsilon > 0$ and $2|a| + 1 > 0$ and $1 > 0$, we have $\delta > 0$.
 
    Let $x \in \R$ and $|x - a| < \delta$. Then:
-   \begin{eqarrows*}
+   \begin{equation}
+   \begin{WithArrows}[displaystyle]
       |f(x) - f(a)| &= |x^2 - a^2| = |(x + a)(x - a)| \\
                     &= |x + a| \cdot |x - a|
                     \Arrow{$|x + a| \leq |x| + |a|$}\\
@@ -24,7 +25,8 @@
                     $\displaystyle\delta \leq \frac{\epsilon}{2|a| + 1}$}\\
                     &\leq \bigl(2|a| + 1\bigr) \cdot \frac{\epsilon}{2|a| + 1} \\
                     &= \epsilon
-   \end{eqarrows*}
+   \end{WithArrows}
+   \end{equation}
 
    (*) is true because $|x| = |a + (x - a)| \leq |a| + |x - a| < |a| + \delta$. Therefore, $|x| < |a| + \delta$.
 

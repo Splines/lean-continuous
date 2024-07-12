@@ -1,40 +1,57 @@
 \subsection{The hyperbola is continuous}
 
+\begin{theorem}
+    Let f: $\R \setminus \{0\} \to \R$ be defined by $f(x) \coloneqq \frac{1}{x}$. Then $f$ is continuous at every point $a \in \R \setminus \{0\}$.
+\end{theorem}
 
 \begin{proof}
-Sei \( x \in \mathbb{R} \) mit \( x \neq 0 \) und \( \epsilon > 0 \) gegeben. Wir müssen ein \( \delta > 0 \) finden, so dass für alle \( y \) mit \( 0 < |y - x| < \delta \) gilt, dass \( \left| \frac{1}{y} - \frac{1}{x} \right| < \epsilon \).
+    Let $a \in \R \setminus \{0\}$ be an arbitrary point where we want to show that $f: \R \setminus \{0\} \to \R, \: x \mapsto \frac{1}{x}$ is continuous.
+    
+    Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \min \left( \frac{\epsilon |a|^2}{2}, \frac{|a|}{2} \right)$. Since $\epsilon > 0$ and $|a| > 0$, we have $\delta > 0$.
 
-Setze \( \delta = \min \left( \frac{\epsilon |x|^2}{2}, \frac{|x|}{2} \right) \).
+    Let $x \in D \coloneqq \R \setminus \{0\}$ and $|x - a| < \delta$. Then:
+    \begin{equation}
+    \begin{WithArrows}[displaystyle]
+        \left| f(x) - f(a) \right|
+        &= \left| \frac{1}{x} - \frac{1}{a} \right|
+        = \left| \frac{a - x}{ax} \right|\\
+        &= \frac{|a - x|}{|a x|}
+        = \frac{|a - x|}{|a||x|}
+            \Arrow{ $|a - x| = |x - a| < \delta$ }\\
+        &< \frac{\delta}{|a||x|}
+            \Arrow{ $\displaystyle|x| > \frac{|a|}{2}$ (*)}\\
+        &< \frac{\delta}{|a| \frac{|a|}{2}}
+            \Arrow{ $\displaystyle \delta \leq \frac{\epsilon |a|^2}{2}$ }\\
+        &\leq \frac{\epsilon |a|^2}{2} \frac{1}{|a| \frac{|a|}{2}}\\
+        &= \epsilon
+    \end{WithArrows}
+	\end{equation}
+	\ignorespacesafterend
 
-\begin{itemize}
-    \item Da \( \epsilon > 0 \) und \( |x| > 0 \), ist \( \delta > 0 \).
-\end{itemize}
+(*) is true because
+\begin{equation}
+\begin{WithArrows}[displaystyle]
+    |x| &= |a + (x - a)|
+        \Arrow{Reverse triangle inequality}\\
+    &\geq |a| - |x - a|
+        \Arrow{ $|x - a| < \delta$ }\\
+    &> |a| - \delta
+        \Arrow{ $\displaystyle\delta \leq \frac{|a|}{2}$ }\\
+    &\geq |a| - \frac{|a|}{2}\\
+    &= \frac{|a|}{2}
+    \quad \implies \quad |x| > \frac{|a|}{2}
+\end{WithArrows}
+\end{equation}
+The reverse triangle inequality used in the first step can also be derived. Let $m,n,u,v \in \R$.
+\begin{equation}
+\begin{WithArrows}[displaystyle]
+    |m + n| &\leq |m| + |n|\\
+    \implies |m + n| - |n| &\leq |m|
+        \Arrow{$m \coloneqq u+v, \:\: n \coloneqq -v$}\\
+    \implies |u| - |v| &\leq |u + v|
+\end{WithArrows}
+\end{equation}
 
-Sei nun \( y \) mit \( y \neq 0 \) und \( |y - x| < \delta \) gegeben.
+The argument shows that $\left| f(x) - f(a) \right| < \epsilon$, which proves the continuity of $f$ at $a$.
 
-\begin{itemize}
-    \item Zuerst zeigen wir, dass \( \left| \frac{1}{x} - \frac{1}{y} \right| = \left| \frac{y - x}{xy} \right| \):
-    \begin{align*}
-    \left| \frac{1}{x} - \frac{1}{y} \right| &= \left| \frac{y - x}{xy} \right| \\
-    &= \frac{|y - x|}{|x||y|}
-    \end{align*}
-
-    \item Da \( |y - x| < \delta \leq \frac{|x|}{2} \), folgt \( |y| > \frac{|x|}{2} \):
-    \begin{align*}
-    |y| &= |x + (y - x)| \\
-    &\geq |x| - |y - x| \\
-    &> |x| - \frac{|x|}{2} \\
-    &= \frac{|x|}{2}
-    \end{align*}
-
-    \item Da \( \delta \leq \frac{\epsilon |x|^2}{2} \), folgt:
-    \begin{align*}
-    \frac{|x - y|}{|x||y|} &< \frac{\delta}{|x| \cdot \frac{|x|}{2}} \\
-    &= \frac{\delta}{\frac{|x|^2}{2}} \\
-    &\leq \frac{\frac{\epsilon |x|^2}{2}}{\frac{|x|^2}{2}} \\
-    &= \epsilon
-    \end{align*}
-\end{itemize}
-
-Somit haben wir gezeigt, dass für alle \( y \) mit \( y \neq 0 \) und \( |y - x| < \delta \) gilt, dass \( \left| \frac{1}{y} - \frac{1}{x} \right| < \epsilon \). Daher ist \( f \) stetig an \( x \).
 \end{proof}
