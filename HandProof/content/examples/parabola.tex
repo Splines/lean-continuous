@@ -15,7 +15,9 @@
                     &= |x + a| \cdot |x - a|
                     \Arrow{$|x + a| \leq |x| + |a|$}\\
                     &\leq \bigl(|x| + |a|\bigr) \cdot |x - a|
-                    \Arrow{$|x-a| < \delta$ and $|a| < |x| + \delta$ (*)}\\
+                    \Arrow{$|x-a| < \delta$}\\
+                    &\leq \bigl(|x| + |a|\bigr) \cdot \delta
+                    \Arrow{$|a| < |x| + \delta$ (*)}\\
                     &< \bigl(|x| + (|x| + \delta)\bigr) \cdot \delta \\
                     &= \bigl(2|x| + \delta\bigr) \cdot \delta
                     \Arrow{$\delta \leq 1$ and

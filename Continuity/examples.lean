@@ -1,11 +1,12 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Continuity.continuous
 
+
 --------------------------------------------------------------------------------
 -- # Constant function `x ↦ c` with `c ∈ ℝ`
 --------------------------------------------------------------------------------
 
-/-- The constant function is continuous (at any given point). -/
+/-- The constant function is continuous (at any given point `a ∈ D ⊆ ℝ`). -/
 theorem constant_function_is_continuous_at_a_point
     (D : Set ℝ) (c : ℝ) (a : D)
     : IsContinuousAt D (fun _ ↦ c) a := by
@@ -14,7 +15,7 @@ theorem constant_function_is_continuous_at_a_point
   intro ε hεbigger0
   exists 1
   exact ⟨by norm_num, by
-    intro x _h_x_δ_criterion
+    intro x _h_xδ_criterion
     simp only [sub_self, abs_zero]
     exact hεbigger0⟩ -- or just put `assumption` here
 
@@ -39,7 +40,7 @@ theorem constant_function_is_continuous
 -- # Function `x ↦ m * x + y₀` with `m, y₀ ∈ ℝ`
 --------------------------------------------------------------------------------
 
-/-- The function `x ↦ m * x + y₀` is continuous (at any given point). -/
+/-- The function `x ↦ m * x + y₀` is continuous (at any given point `a ∈ D ⊆ ℝ`). -/
 theorem lines_are_continuous_at_a_point
     (D : Set ℝ) (m y₀ : ℝ) (a : D)
     : IsContinuousAt D (fun x ↦ m * x + y₀) a := by
@@ -59,11 +60,11 @@ theorem lines_are_continuous_at_a_point
     have h_δbigger0 : δ > 0 := by positivity
     exists δ
     simp only [h_δbigger0, true_and]
-    intro x h_x_δ_criterion
+    intro x h_xδ_criterion
     simp
     calc |m * x - m * a| = |m * (x - a)| := by ring_nf
       _ = |m| * |x.val - a.val| := abs_mul m (x - a)
-      _ < |m| * δ := (mul_lt_mul_iff_of_pos_left (by positivity)).mpr h_x_δ_criterion
+      _ < |m| * δ := (mul_lt_mul_iff_of_pos_left (by positivity)).mpr h_xδ_criterion
       _ = |m| * (ε / |m|) := by rfl
       _ = ε := by field_simp
 
@@ -80,4 +81,61 @@ theorem lines_are_continuous
 -- # Parabola `x ↦ x^2`
 --------------------------------------------------------------------------------
 
--- /-- The parabola `x ↦ x^2` is continuous. -/
+/-- The function `x ↦ x^2` is continuous (at any given point `a ∈ D ⊆ ℝ`). -/
+theorem parabola_is_continuous_at_a_point
+    (D : Set ℝ) (a : D)
+    : IsContinuousAt D (fun x ↦ x^2) a := by
+
+  let a' := a.val
+  dsimp [IsContinuousAt]
+  intro ε h_εbigger0
+
+  -- `δ` and its upper bounds
+  let δ := ε / (2 * |x'| + 1) ⊓ 1
+  use δ
+  have h_δbigger0 : δ > 0 := by simp [δ]; positivity
+  have h_δsmaller1 : δ ≤ 1 := inf_le_right
+  have h_δsmallerε : δ ≤ ε / (2 * |x'| + 1) := inf_le_left
+  simp only [h_δbigger0, true_and]
+
+  intro x h_xδ_criterion
+  let x' := x.val
+
+  -- Some inequalities for the calculation
+  have h_asmaller : |a'| < (|x'| + δ) := by calc
+    |a'| = |x' + (a' - x')|  := by ring_nf
+      _ <= |x'| + |a' - x'|  := abs_add x' (a' - x')
+      _ = |x'| + |x' - a'|   := by rw [abs_sub_comm]
+      _ < |x'| + δ           := (Real.add_lt_add_iff_left |x'|).mpr h_xδ_criterion
+  have h_asmaller_with_added_term : |x'| + |a'| < |x'| + (|x'| + δ)
+    := (Real.add_lt_add_iff_left |x'|).mpr h_asmaller
+  have h_triangle_inequality : |x' + a'| ≤ |x'| + |a'| := abs_add x' a'
+
+  calc |x'^2 - a'^2|
+
+    _ = |(x' + a') * (x' - a')|
+      := by ring_nf
+
+    _ = |x' + a'| * |x' - a'|
+      := abs_mul (x' + a') (x' - a')
+
+    _ ≤ (|x'| + |a'|) * |x' - a'|
+      := mul_le_mul_of_nonneg_right h_triangle_inequality (abs_nonneg (x' - a'))
+
+    _ ≤ (|x'| + |a'|) * δ
+      := mul_le_mul_of_nonneg_left (le_of_lt h_xδ_criterion) (by positivity)
+
+    _ < (|x'| + (|x'| + δ)) * δ
+      := (mul_lt_mul_iff_of_pos_right h_δbigger0).mpr h_asmaller_with_added_term
+
+    _ = (2 * |x'| + δ) * δ
+      := by ring_nf
+
+    _ ≤ (2 * |x'| + 1) * δ
+      := (mul_le_mul_iff_of_pos_right h_δbigger0).mpr (by linarith)
+
+    _ ≤ (2 * |x'| + 1) * (ε / (2 * |x'| + 1))
+      := mul_le_mul_of_nonneg_left h_δsmallerε (by positivity)
+
+    _ = ε
+      := by field_simp

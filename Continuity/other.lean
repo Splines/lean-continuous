@@ -1,44 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Continuity.continuous
-/-
-The function `x ↦ x ^ 2` is continuous at every point on all of `ℝ`
-(which is the 'universal' set `Set.univ : Set ℝ`.
-
-This proof is very verbose. Try to understand what is going on step by step and optimize the argument.
--/
--/
-example (x : ℝ) : IsContinuousAt Set.univ (fun y ↦ y ^ 2) x trivial := by
-  intro ε hε
-  let δ : ℝ := ε / (2 * |x| + 1) ⊓ 1
-  use δ
-  -- the `positivity` tactic can solve many goals of the form `0 < a` or `0 ≤ a`.
-  have hd : 0 < δ := by simp [δ]; positivity
-  have hd' : δ ≤ 1 := inf_le_right
-  have hd'' : δ ≤ ε / (2 * |x| + 1) := inf_le_left
-  refine ⟨hd, ?_⟩
-  intro y _ hyd
-  have h0 : |y| < |x| + δ := by
-    calc |y| = |x + (y - x)| := by ring_nf
-          _  ≤ |x| + |y - x| := abs_add x (y - x)
-          _  ≤ |x| + |x - y| := by rw [abs_sub_comm]
-          _  < |x| + δ       := (Real.add_lt_add_iff_left |x|).mpr hyd
-  have h1 : |x + y| ≤ |x| + |y| := abs_add x y
-  have h2 : 0 ≤ |x - y| := abs_nonneg (x - y)
-  have h3 : 0 ≤ |x| + |y| := by positivity
-  have h4 : |x - y| ≤ δ := le_of_lt hyd
-  have h5 : |x| + |y| < |x| + (|x| + δ) := (Real.add_lt_add_iff_left |x|).mpr h0
-  have h6 : 2 * |x| + δ ≤ 2 * |x| + 1 := (add_le_add_iff_left (2 * |x|)).mpr hd'
-  calc
-    |x ^ 2 - y ^ 2| = |(x + y) * (x - y)|   := by ring_nf
-                  _ = |x + y| * |x - y|     := abs_mul (x + y) (x - y)
-                  _ ≤ (|x| + |y|) * |x - y| := mul_le_mul_of_nonneg_right h1 h2
-                  _ ≤ (|x| + |y|) * δ       := mul_le_mul_of_nonneg_left h4 h3
-                  _ < (|x| + (|x| + δ)) * δ := (mul_lt_mul_iff_of_pos_right hd).mpr h5
-                  _ = (2 * |x| + δ) * δ     := by ring_nf
-                  _ ≤ (2 * |x| + 1) * δ     := (mul_le_mul_iff_of_pos_right hd).mpr h6
-                  _ ≤ (2 * |x| + 1) * (ε / (2 * |x| + 1)) :=
-                      mul_le_mul_of_nonneg_left hd'' (by positivity)
-                  _ = ε                     := by field_simp
 
 /-
 The function `x ↦ 1 / x` is continuous at `0` on the set `D = { x | x ≠ 0 }`.
