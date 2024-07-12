@@ -1,3 +1,5 @@
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Continuity.continuous
 /-
 The function `x ↦ x ^ 2` is continuous at every point on all of `ℝ`
 (which is the 'universal' set `Set.univ : Set ℝ`.
