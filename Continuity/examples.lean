@@ -102,6 +102,7 @@ theorem parabola_is_continuous_at_a_point
   let x' := x.val
 
   -- Some inequalities for the calculation
+  have h_triangle_inequality : |x' + a'| ≤ |x'| + |a'| := abs_add x' a'
   have h_asmaller : |a'| < (|x'| + δ) := by calc
     |a'| = |x' + (a' - x')|  := by ring_nf
       _ <= |x'| + |a' - x'|  := abs_add x' (a' - x')
@@ -109,7 +110,6 @@ theorem parabola_is_continuous_at_a_point
       _ < |x'| + δ           := (Real.add_lt_add_iff_left |x'|).mpr h_xδ_criterion
   have h_asmaller_with_added_term : |x'| + |a'| < |x'| + (|x'| + δ)
     := (Real.add_lt_add_iff_left |x'|).mpr h_asmaller
-  have h_triangle_inequality : |x' + a'| ≤ |x'| + |a'| := abs_add x' a'
 
   calc |x'^2 - a'^2|
 
