@@ -12,10 +12,6 @@ In this project, we show basic properties of continuous functions. The goal isto
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
-/-- The domain `D` of any function that we consider in this document is a
-  subset of the real numbers `ℝ`. -/
--- variable {D : Set ℝ}
-
 /-- We can find lemma names by using the library search tactic `exact?`. -/
 example (x y : ℝ) : |x + y| ≤ |x| + |y| := by
   exact abs_add x y
