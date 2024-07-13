@@ -1,10 +1,10 @@
 \subsection{The exponential function is continuous}
 
 We assume that the exponential function is defined by its power series:
-\begin{align}
+\begin{align*}
     e^x \coloneqq \sum_{k=0}^\infty \frac{x^k}{k!}
     = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
-\end{align}
+\end{align*}
 
 \begin{theorem}\label{theo:exp_const_0}
     Let $f: \R \to \R$ be defined by $f(x) \coloneqq e^x$. Then $f$ is continuous at $a = 0$.
@@ -16,7 +16,7 @@ We assume that the exponential function is defined by its power series:
     Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \frac{\epsilon}{\epsilon + 1}$. Since $\epsilon > 0$ we have $0 < \delta < 1$.
 
     Let $x \in \R$ and $|x - a| = |x - 0| = |x| < \delta$. Then:
-    \begin{equation}
+    \begin{equation*}
     \begin{WithArrows}[displaystyle]
         |f(x) - f(0)| &= |e^x - e^0| = |e^x - 1|
           \Arrow{ definition of $e^x$ }\\
@@ -36,7 +36,7 @@ We assume that the exponential function is defined by its power series:
         = \epsilon + 1 - 1
         = \epsilon
     \end{WithArrows}
-    \end{equation}
+    \end{equation*}
 
     The argument shows that $|f(x) - f(0)| < \epsilon$, which proves the continuity of $f$ at $0$.
 \end{proof}
@@ -55,7 +55,7 @@ We assume that the exponential function is defined by its power series:
   Let $\epsilon > 0$. We let the choice of $\delta > 0$ open for now.
 
   Let $x\in \R$ and $|x - a| < \delta$. Then:
-  \begin{equation}
+  \begin{equation*}
   \begin{WithArrows}[displaystyle]
       \left| f(x) - f(a) \right| &= \left| e^x - e^a \right|
         \Arrow{$e^{x'} e^{y'} = e^{x'+y'} \:\: \forall x',y' \in \R$}\\
@@ -65,7 +65,7 @@ We assume that the exponential function is defined by its power series:
       &= e^a \cdot \left| e^{x-a} - e^0 \right|\\
       &= e^a \cdot \left| e^{z} - e^0 \right|
   \end{WithArrows}
-  \end{equation}
+  \end{equation*}
 
   We substituted $z \coloneqq x - a$ and therefore $|x - a| = |z| < \delta$ (and still $\delta > 0$). This was done to \textbf{reduce the problem}. Should $f: \R \to \R, \: z \mapsto e^z$ be continuous at $0$, then by definition of continuity in \ref{def:continuous}, we know:
   \begin{align*}

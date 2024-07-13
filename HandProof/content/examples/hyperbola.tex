@@ -10,7 +10,7 @@
     Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \min \left( \frac{\epsilon |a|^2}{2}, \frac{|a|}{2} \right)$. Since $\epsilon > 0$ and $|a| > 0$ ($a\in \R \setminus \{0\}$), we have $\delta > 0$.
 
     Let $x \in D \coloneqq \R \setminus \{0\}$ and $|x - a| < \delta$. Then:
-    \begin{equation}
+    \begin{equation*}
     \begin{WithArrows}[displaystyle]
         \left| f(x) - f(a) \right|
         &= \left| \frac{1}{x} - \frac{1}{a} \right|
@@ -25,11 +25,10 @@
         &\leq \frac{\epsilon |a|^2}{2} \frac{1}{|a| \frac{|a|}{2}}\\
         &= \epsilon
     \end{WithArrows}
-	\end{equation}
-	\ignorespacesafterend
+	\end{equation*}
 
 (*) is true because
-\begin{equation}
+\begin{equation*}
 \begin{WithArrows}[displaystyle]
     |x| &= |a + (x - a)|
         \Arrow{Reverse triangle inequality}\\
@@ -41,16 +40,16 @@
     &= \frac{|a|}{2}
     \quad \implies \quad |x| > \frac{|a|}{2}
 \end{WithArrows}
-\end{equation}
+\end{equation*}
 The reverse triangle inequality used in the first step can also be derived. Let $m,n,u,v \in \R$.
-\begin{equation}
+\begin{equation*}
 \begin{WithArrows}[displaystyle]
     |m + n| &\leq |m| + |n|\\
     \implies |m + n| - |n| &\leq |m|
         \Arrow{$m \coloneqq u+v, \:\: n \coloneqq -v$}\\
     \implies |u| - |v| &\leq |u + v|
 \end{WithArrows}
-\end{equation}
+\end{equation*}
 
 The argument shows that $\left| f(x) - f(a) \right| < \epsilon$, which proves the continuity of $f$ at $a$.
 
