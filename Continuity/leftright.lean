@@ -1,8 +1,9 @@
-
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Continuity.continuous
 /-
 Definition of a right continuous function. Can you explain the definition?
 -/
-def IsRightContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) : Prop :=
+def IsRightContinuousAt (D : Set ℝ) (f : D → ℝ) (x : D) : Prop :=
   ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y > x → |x - y| < δ → |f x - f y| < ε
 
 @[simp]
@@ -55,12 +56,12 @@ Now define a left continuous function and prove that a function is continuous at
 
 Hint: You might find the `by_cases` tactic helpful!
 -/
-def IsLeftContinuousAt (D : Set ℝ) (f : ℝ → ℝ) (x : ℝ) (_ : x ∈ D) : Prop :=
-  ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y < x → |x - y| < δ → |f x - f y| < ε
+def IsLeftContinuousAt (D : Set ℝ) (f : D → ℝ) (x : D) : Prop :=
+  ∀ ε > 0, ∃ δ > 0, ∀ a ∈ D, a < x → |x - a| < δ → |f x - f a| < ε
 @[simp]
 /-
 -/
-theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: ℝ → ℝ) (x : ℝ) (hx : x ∈ D): (IsContinuousAt D f x hx) ↔ (IsLeftContinuousAt D f x hx ∧ IsRightContinuousAt D f x hx) := by
+theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: D → ℝ) (x : D) : (IsContinuousAt D f x) ↔ (IsLeftContinuousAt D f x ∧ IsRightContinuousAt D f x) := by
   constructor
   -- left side implies right side
   · intro h
