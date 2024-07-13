@@ -65,11 +65,22 @@ theorem lines_are_continuous_at_a_point
     intro x h_xδ_criterion
     simp
 
-    calc |m * x - m * a| = |m * (x - a)| := by ring_nf
-      _ = |m| * |x.val - a.val| := abs_mul m (x - a)
-      _ < |m| * δ := (mul_lt_mul_iff_of_pos_left (by positivity)).mpr h_xδ_criterion
-      _ = |m| * (ε / |m|) := by rfl
-      _ = ε := by field_simp
+    calc |m * x - m * a|
+
+      _ = |m * (x - a)|
+        := by ring_nf
+
+      _ = |m| * |x.val - a.val|
+        := abs_mul m (x - a)
+
+      _ < |m| * δ
+        := (mul_lt_mul_iff_of_pos_left (by positivity)).mpr h_xδ_criterion
+
+      _ = |m| * (ε / |m|)
+        := by rfl
+
+      _ = ε
+        := by field_simp
 
 /-- The function `x ↦ m * x + y₀` is continuous. -/
 theorem lines_are_continuous
@@ -203,7 +214,7 @@ theorem hyperbola_is_continuous_at_a_point
 
   -- Some inequalities for the calculation
   have h_x_bigger_a : |x'| > |a'| / 2 := by
-    calc |x'| = |a' + (x' - a')|  := by ring_nf
+    calc |x'|   = |a' + (x' - a')|  := by ring_nf
       _ ≥ |a'| - |x' - a'|  := by linarith [reverse_triangle_inequality a' (x' - a')]
       _ > |a'| - δ          := by linarith [h_xδ_criterion]
       _ ≥ |a'| / 2          := by linarith [h_δsmallersecond]
