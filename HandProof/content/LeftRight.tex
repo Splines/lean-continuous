@@ -1,0 +1,100 @@
+\section{Left- and Right-Continuous Functions}
+
+\begin{definition}[Definition of a Left Continuous Function]\label{def:leftcontinuous}
+    A function $f : D \to \mathbb{R}$ is \textit{right continuous at a point} $a \in D$ if 
+    \[
+        \forall \epsilon > 0, \exists \delta > 0, \forall x \in D, x > a \Rightarrow (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon).
+        \]
+    If $f$ is left continuous at every point in the domain $D$, then we say that $f$ is \textit{left continuous on} $D$.
+\end{definition}
+
+\begin{definition}[Definition of a Right Continuous Function]\label{def:rightcontinuous}
+    A function $f : D \to \mathbb{R}$ is \textit{right continuous at a point} $a \in D$ if 
+    \[
+        \forall \epsilon > 0, \exists \delta > 0, \forall x \in D, x < a \Rightarrow (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon).
+        \]
+    If $f$ is right continuous at every point in the domain $D$, then we say that $f$ is \textit{right continuous on} $D$.
+\end{definition}
+
+\begin{definition}[Definition of the Heaviside Function]\label{def:heaviside}
+    The Heaviside function $H : \mathbb{R} \to \mathbb{R}$ is defined as
+    \[
+    H(x) = \begin{cases} 
+    0 & \text{if } x < 0, \\
+    1 & \text{otherwise}.
+    \end{cases}
+    \]
+\end{definition}
+
+\begin{theorem}[Heaviside Function is Right Continuous at 0]
+    Let $f: \R \to \R$ be the Heaviside Function. Then $f$ is right continuous in $0.
+\end{theorem}
+
+\begin{proof}
+    Let $\epsilon > 0$. Choose $\delta = 1$. Then, for any $x > 0$, we have:
+    \[
+    \begin{aligned}
+    &\text{Since } x > 0, \text{we have } H(x) = 1. \\
+    &\text{So, } |H(x) - H(0)| = |1 - 1| = 0 < \epsilon.
+    \end{aligned}
+    \]
+\end{proof}
+
+\begin{theorem}[Heaviside Function is Not Continuous at 0]
+    Let $f: \R \to \R$ be the Heaviside Function. Then $f$ is not continuous in $0.
+\end{theorem}
+
+\begin{proof}
+    Assume, for contradiction, that $H$ is continuous at 0. Let $\epsilon = \frac{1}{2}$. Then there exists $\delta > 0$ such that for all $x \in D$, if $|x - 0| < \delta$, then $|H(x) - H(0)| < \epsilon$. Consider $x = -\frac{\delta}{2}$. We have:
+    \[
+    \begin{aligned}
+    & x < 0 \implies H(x) = 0, \\
+    & \text{and } |x| < \delta \implies |-\frac{\delta}{2}| < \delta, \\
+    & \text{So, } |H(x) - H(0)| = |0 - 1| = 1 \geq \frac{1}{2} = \epsilon.
+    \end{aligned}
+    \]
+    This is a contradiction, so $H$ is not continuous at 0.
+\end{proof}
+
+\begin{theorem}[Left and Right Continuous \iff Continuous]
+    A function $f : D \to \mathbb{R}$ is continuous at a point $x \in D$ if and only if it is both left continuous and right continuous at $x.
+\end{theorem}
+
+\begin{proof}
+    \begin{itemize}
+    \item[(\(\Rightarrow\))] Assume $f$ is continuous at $a$.
+        \begin{itemize}
+        \item To show $f$ is left continuous at $a$:
+        \[
+        \begin{aligned}
+        &\forall \epsilon > 0, \exists \delta > 0 \text{ such that } \forall x \in D, (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon). \\
+        & \text{This implies the definition of left continuity.}
+        \end{aligned}
+        \]
+
+        \item To show $f$ is right continuous at $a$:
+        \[
+        \begin{aligned}
+        &\forall \epsilon > 0, \exists \delta > 0 \text{ such that } \forall x \in D, (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon). \\
+        & \text{This implies the definition of right continuity.}
+        \end{aligned}
+        \]
+        \end{itemize}
+
+    \item[(\(\Leftarrow\))] Assume $f$ is both left continuous and right continuous at $a$.
+        \begin{itemize}
+        \item We need to show $\forall \epsilon > 0, \exists \delta > 0 \text{ such that } \forall x \in D, (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon).$
+        \[
+        \begin{aligned}
+        & \text{Since $f$ is left continuous, } \exists \delta_1 > 0 \text{ such that } \forall x \in D, (x < a \rightarrow |x - a| < \delta_1 \rightarrow |f(x) - f(a)| < \epsilon). \\
+        & \text{Since $f$ is right continuous, } \exists \delta_2 > 0 \text{ such that } \forall x \in D, (x > a \rightarrow |x - a| < \delta_2 \rightarrow |f(x) - f(a)| < \epsilon). \\
+        & \text{Let } \delta = \min(\delta_1, \delta_2). \text{ Then, for any } y \in D, \\
+        & \text{if } |x - a| < \delta, \text{ then either } a < x \text{ or } a > x. \\
+        & \text{If } a < x, \text{ then } |x - a| < \delta_1 \text{ and } |f(x) - f(a)| < \epsilon \text{ by left continuity.} \\
+        & \text{If } a > x, \text{ then } |x - a| < \delta_2 \text{ and } |f(x) - f(a)| < \epsilon \text{ by right continuity.} \\
+        & \text{Thus, } f \text{ is continuous at } a.
+        \end{aligned}
+        \]
+        \end{itemize}
+    \end{itemize}
+\end{proof}

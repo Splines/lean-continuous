@@ -65,14 +65,14 @@ theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: D → ℝ) (x : D) 
   · intro h
     constructor
     · intro ε hε
-      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith)--warum brauche ich hier linarith? Obtain nochmal untersuchen
+      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith)
       use δ
       constructor
       · exact hδ
       · intros y hy yltx
         exact hδ_prop y hy
     · intro ε hε
-      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith) --warum brauche ich hier linarith? Obtain nochmal untersuchen
+      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith)
       use δ
       constructor
       · exact hδ
