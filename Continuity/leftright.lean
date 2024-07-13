@@ -3,12 +3,20 @@ import Continuity.continuous
 /-
 Definition of a right continuous function. Can you explain the definition?
 -/
-def IsRightContinuousAt (D : Set ℝ) (f : D → ℝ) (x : D) : Prop :=
-  ∀ ε > 0, ∃ δ > 0, ∀ y ∈ D, y > x → |x - y| < δ → |f x - f y| < ε
-
+def IsRightContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
+  ∀ ε > 0, ∃ δ > 0, ∀ x : D, x.val > a.val
+  (|x.val - a.val| < δ  →  |f x - f a| < ε)
 @[simp]
+/-
+-/
+def IsLeftContinuousAt (D : Set ℝ) (f : D → ℝ) (x : D) : Prop :=
+  ∀ ε > 0, ∃ δ > 0, ∀ a ∈ D, a < x → |x - a| < δ → |f x - f a| < ε
+@[simp]
+/-
+-/
 noncomputable def Heaviside (x : ℝ) : ℝ := if x < 0 then 0 else 1
 /- The Heaviside function is right continuous. -/
+
 example : IsRightContinuousAt Set.univ Heaviside 0 trivial := by
   intro ε hε
   use 1
@@ -49,16 +57,6 @@ example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
     exact h3
   have h6 : |Heaviside x - Heaviside 0| < |Heaviside x - Heaviside 0| := lt_of_lt_of_le h5 h4
   apply lt_irrefl |Heaviside x - Heaviside 0| h6
-
-
-/-
-Now define a left continuous function and prove that a function is continuous at `x` if and only if it is left and right continuous at `x`!
-
-Hint: You might find the `by_cases` tactic helpful!
--/
-def IsLeftContinuousAt (D : Set ℝ) (f : D → ℝ) (x : D) : Prop :=
-  ∀ ε > 0, ∃ δ > 0, ∀ a ∈ D, a < x → |x - a| < δ → |f x - f a| < ε
-@[simp]
 /-
 -/
 theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: D → ℝ) (x : D) : (IsContinuousAt D f x) ↔ (IsLeftContinuousAt D f x ∧ IsRightContinuousAt D f x) := by

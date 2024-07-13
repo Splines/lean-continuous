@@ -51,7 +51,7 @@ theorem cont_mul (D : Set ℝ) (f: D → ℝ) (g: D → ℝ) (hf: IsContinuous D
     exact abs_nonneg _
 
   have hg1 : ∃ δ₂ > 0, ∀ y ∈ D, |x - y| < δ₂ → |g x - g y| < ε / (2 * (ε +|f y|)) := by
-    apply hg x  (ε / (2 * (ε +|f x|)))
+    apply hg x (ε / (2 * (ε +|f x|)))
     apply div_pos hε
     apply mul_pos zero_lt_two
     apply add_pos_of_pos_of_nonneg hε
