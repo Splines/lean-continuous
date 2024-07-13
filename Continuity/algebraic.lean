@@ -86,8 +86,8 @@ theorem cont_mul (D : Set ℝ) (f: D → ℝ) (g: D → ℝ) (hf: IsContinuous D
         apply mul_le_mul_of_nonneg_right
         · apply div_le_div_of_nonneg_left
           · exact le_of_lt hε
-          · apply mul_pos zero_lt_two
-            sorry 
+          · positivity
+          · simp
         · exact abs_nonneg (g y)
 
     calc |(f * g) x - (f * g) y| = |f x * g x - f y * g y| := by simp [mul_sub]
