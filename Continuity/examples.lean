@@ -163,16 +163,14 @@ lemma element_not_zero_if_set_has_no_zero
   apply ne_of_mem_of_not_mem a.property
   exact h_0notinD
 
-lemma reverse_triangle_inequality
-    (a b : ℝ)
-    : |a| - |b| ≤ |a + b| := by
+/-- For `a, b ∈ ℝ`, we have `|a| - |b| ≤ |a + b|`. -/
+lemma reverse_triangle_inequality (a b : ℝ) : |a| - |b| ≤ |a + b| := by
   let m : ℝ := a + b
   let n : ℝ := -b
   have h_mn : m + n = a := by ring_nf
-  calc
-    |a| - |b| = |m + n| - |n| := by rw [h_mn, abs_neg]
-            _ ≤ |m| := by linarith [abs_add m n]
-            _ = |a + b| := by linarith [h_mn]
+  calc |a| - |b| = |m + n| - |n| := by rw [h_mn, abs_neg]
+               _ ≤ |m| := by linarith [abs_add m n]
+               _ = |a + b| := by rfl
 
 
 /-- The function `x ↦ 1/x` is continuous
