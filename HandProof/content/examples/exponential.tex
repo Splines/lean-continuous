@@ -1,0 +1,86 @@
+\subsection{The exponential function is continuous}
+
+We assume that the exponential function is defined by its power series:
+\begin{align}
+    e^x \coloneqq \sum_{k=0}^\infty \frac{x^k}{k!}
+    = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+\end{align}
+
+\begin{theorem}\label{theo:exp_const_0}
+    Let $f: \R \to \R$ be defined by $f(x) \coloneqq e^x$. Then $f$ is continuous at $a = 0$.
+\end{theorem}
+
+\begin{proof}\footnote{This proof is adapted from \href{https://youtu.be/CPWO8RsIBy8}{this video}.}
+    We want to show that $f: \R \to \R, \: x \mapsto e^x$ is continuous at $a = 0$.
+
+    Let $\epsilon > 0$. We choose $\displaystyle \delta \coloneqq \frac{\epsilon}{\epsilon + 1}$. Since $\epsilon > 0$ we have $0 < \delta < 1$.
+
+    Let $x \in \R$ and $|x - a| = |x - 0| = |x| < \delta$. Then:
+    \begin{equation}
+    \begin{WithArrows}[displaystyle]
+        |f(x) - f(0)| &= |e^x - e^0| = |e^x - 1|
+          \Arrow{ definition of $e^x$ }\\
+        &= \left| \sum_{k=0}^\infty \frac{x^k}{k!} - 1 \right|\\
+        &= \left| \sum_{k=1}^\infty \frac{x^k}{k!} \right|\\
+        &\leq \sum_{k=1}^\infty \frac{|x|^k}{k!}
+          \Arrow{ $|x| < \delta$ }\\
+        &< \sum_{k=1}^\infty \frac{\delta^k}{k!}
+          \Arrow{ $k > 0$ }\\
+        &< \sum_{k=1}^\infty \delta^k\\
+        &= \left(\sum_{k=0}^\infty \delta^k\right) - 1
+          \Arrow{ Geometric series, $0 < \delta < 1$ }\\
+        &= \frac{1}{1 - \delta} - 1
+          \Arrow{ $\displaystyle \delta \coloneqq \frac{\epsilon}{\epsilon + 1}$ }\\
+        &= \frac{1}{1 - \frac{\epsilon}{\epsilon + 1}} - 1\\
+        &= \frac{1}{\frac{1}{\epsilon + 1}} - 1
+        = \epsilon + 1 - 1
+        = \epsilon
+    \end{WithArrows}
+    \end{equation}
+
+    The argument shows that $|f(x) - f(0)| < \epsilon$, which proves the continuity of $f$ at $0$.
+\end{proof}
+
+
+
+
+\pagebreak
+\begin{theorem}
+  Let $f: \R \to \R$ be defined by $f(x) \coloneqq e^x$. Then $f$ is continuous at every point $a \in \R$.
+\end{theorem}
+
+\begin{proof}\footnote{This proof is adapted from \href{https://youtu.be/CPWO8RsIBy8}{this video}.}
+  Let $a \in \R$ be an arbitrary point where we want to show that $f: \R \to \R, \: x, \mapsto e^x$ is continuous.
+
+  Let $\epsilon > 0$. We let the choice of $\delta > 0$ open for now.
+
+  Let $x\in \R$ and $|x - a| < \delta$. Then:
+  \begin{equation}
+  \begin{WithArrows}[displaystyle]
+      \left| f(x) - f(a) \right| &= \left| e^x - e^a \right|
+        \Arrow{$e^{x'} e^{y'} = e^{x'+y'} \:\: \forall x',y' \in \R$}\\
+      &= \left| e^a \cdot (e^{x-a} - 1) \right|
+        \Arrow{$e^{x'} > 0 \:\: \forall x' \in \R$}\\
+      &= e^a \cdot \left| e^{x-a} - 1 \right|\\
+      &= e^a \cdot \left| e^{x-a} - e^0 \right|\\
+      &= e^a \cdot \left| e^{z} - e^0 \right|
+  \end{WithArrows}
+  \end{equation}
+
+  We substituted $z \coloneqq x - a$ and therefore $|x - a| = |z| < \delta$ (and still $\delta > 0$). This was done to \textbf{reduce the problem}. Should $f: \R \to \R, \: z \mapsto e^z$ be continuous at $0$, then by definition of continuity in \ref{def:continuous}, we know:
+  \begin{align*}
+      \forall \epsilon' > 0 \quad \exists \delta > 0
+      \quad \forall z \in \R: \quad
+      \Bigl(|z - 0| < \delta \: \implies \: |f(z) - f(0)| = |e^z - e^0| < \epsilon' \Bigr)
+  \end{align*}
+  And indeed $|z| < \delta$. Let's choose $\displaystyle \epsilon' \coloneqq \frac{\epsilon}{e^a}$. Then continuing the above argument:
+  \begin{align*}
+      \left| f(x) - f(a) \right| &= e^a \cdot \left| e^{z} - e^0 \right|
+      < e^a \cdot \epsilon'
+      = e^a \cdot \frac{\epsilon}{e^a}
+      = \epsilon
+  \end{align*}
+
+  By \autoref{theo:exp_const_0}, we know that $f: \R \to \R, \: z \mapsto e^z$ is continuous at $0$. With the reasoning above, this implies that $|f(x) - f(a)| < \epsilon$ for all $x \in \R$ with $|x - a| < \delta$. Therefore, $f$ is continuous at every point $a \in \R$.
+  
+\end{proof}
