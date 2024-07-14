@@ -53,8 +53,8 @@ theorem lines_are_continuous_at_a_point
     let δ := ε / |m|
     use δ
     have h_δbigger0 : δ > 0 := by positivity
-
     simp only [h_δbigger0, true_and]
+
     intro x h_xδ_criterion
     simp
 
@@ -68,7 +68,7 @@ theorem lines_are_continuous_at_a_point
         := abs_mul m (x' - a')
 
       _ < |m| * δ
-        := (mul_lt_mul_iff_of_pos_left (by positivity)).mpr h_xδ_criterion
+        := (mul_lt_mul_left (by positivity)).mpr h_xδ_criterion
 
       _ = |m| * (ε / |m|)
         := by rfl
