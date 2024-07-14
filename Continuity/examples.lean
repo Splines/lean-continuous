@@ -14,18 +14,11 @@ theorem constant_function_is_continuous_at_a_point
   dsimp [IsContinuousAt]
   intro ε hεbigger0
   exists 1
-  exact ⟨by norm_num, by
-    intro x _h_xδ_criterion
-    simp only [sub_self, abs_zero]
-    exact hεbigger0⟩ -- or just put `assumption` here
+  simp only [one_pos, true_and]
 
-  -- Alternative proof
-  -- dsimp [IsContinuousAt]
-  -- intro ε hεbigger0
-  -- exists 1
-  -- simp only [gt_iff_lt, zero_lt_one, sub_self, abs_zero, true_and]
-  -- intro x _h_delta_criterion
-  -- assumption
+  intro x _h_xδ_criterion
+  simp only [sub_self, abs_zero]
+  exact hεbigger0
 
 /-- The constant function is continuous. -/
 theorem constant_function_is_continuous
@@ -65,13 +58,14 @@ theorem lines_are_continuous_at_a_point
     intro x h_xδ_criterion
     simp
 
-    calc |m * x - m * a|
+    let x' := x.val; let a' := a.val
+    calc |m * x' - m * a'|
 
-      _ = |m * (x - a)|
+      _ = |m * (x' - a')|
         := by ring_nf
 
-      _ = |m| * |x.val - a.val|
-        := abs_mul m (x - a)
+      _ = |m| * |x' - a'|
+        := abs_mul m (x' - a')
 
       _ < |m| * δ
         := (mul_lt_mul_iff_of_pos_left (by positivity)).mpr h_xδ_criterion
