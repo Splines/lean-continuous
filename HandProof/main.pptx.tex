@@ -1,6 +1,6 @@
 \documentclass[14pt,a4paper,usenglish]{extarticle}
 
-\usepackage[left=3cm,right=3cm,top=0cm,bottom=0cm]{geometry}
+\usepackage[left=0cm,right=10cm,top=0cm,bottom=0cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[american]{babel}
 \usepackage[T1]{fontenc} % allow west-european symbols (also umlauts: ä, ö, ü)
@@ -9,6 +9,9 @@
 \usepackage{amsthm}
 \usepackage[framemethod=TikZ]{mdframed} % for boxes around theorems
 \usepackage{amssymb}
+\usepackage{mathtools} % for \coloneqq
+\usepackage{bm}
+\usepackage{cancel}
 \usepackage{nicefrac}
 \usepackage{physics}
 \usepackage{graphicx}
@@ -30,6 +33,7 @@
 \newcommand{\determ}{\operatorname{det}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Z}{\mathbb{Z}}
+\usepackage{witharrows}
 
 \DeclareMathOperator{\sinc}{sinc}
 
@@ -70,11 +74,11 @@
 	\ignorespacesafterend
 }
 
+\usepackage{pgfplots}
+
 \pagestyle{empty}
 \begin{document}
 
-\begin{tikzpicture}
-	\draw (-3,4) parabola bend (0,-.5) (3,4);
-\end{tikzpicture}
+Let $x \in \R$ and $|x-a| < \delta$.
 
 \end{document}
