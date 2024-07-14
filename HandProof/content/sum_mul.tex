@@ -1,62 +1,93 @@
 \section{Sum and Product of Continuous Functions}
 
-\begin{theorem}[The Sum of continuous functions is continuous]
+\begin{theorem}[The sum of continuous functions is continuous]
     If $f$ and $g$ are continuous functions on a set $D \subseteq \mathbb{R}$, then $f + g$ is continuous on $D$.
 \end{theorem}
 
 \begin{proof}
-    Assume $f$ and $g$ are continuous on $D$. We need to show that $f + g$ is continuous at any $x \in D$. Let $a \in D$ and $\epsilon > 0$. By the continuity of $f$ and $g$, we have:
+    Assume $f$ and $g$ are continuous on $D$. We need to show that $f + g$ is continuous at any $a \in D$. Let $a \in D$ and $\epsilon > 0$. By the continuity of $f$ and $g$, we have:
+
     \begin{itemize}
-        \item There exists $\delta_1 > 0$ such that for all $x \in D$, if $|x - a| < \delta_1$, then $|f(x) - f(a)| < \frac{\epsilon}{2}$.
-        \item There exists $\delta_2 > 0$ such that for all $x \in D$, if $|x - a| < \delta_2$, then $|g(x) - g(a)| < \frac{\epsilon}{2}$.
+        \item There $\exists \delta_1 > 0$ such that
+        $\forall x \in D$, if $|x - a| < \delta_1$,
+        then $|f(x) - f(a)| < \frac{\epsilon}{2}$.
+
+        \item There $\exists \delta_2 > 0$ such that
+        $\forall x \in D$, if $|x - a| < \delta_2$,
+        then $|g(x) - g(a)| < \frac{\epsilon}{2}$.
     \end{itemize}
-    Choose $\delta = \min(\delta_1, \delta_2)$. Then $\delta > 0$ and for all $x \in D$, if $|x - a| < \delta$, we have:
+
+    Choose $\delta \coloneqq \min(\delta_1, \delta_2)$. Then $\delta > 0$ since both $\delta_1 > 0$ and $\delta_2 > 0$.
+    
+    Let $x\in D$. If $|x - a| < \delta$, we have:
     \begin{align*}
-    |f(x) - f(a)| &< \frac{\epsilon}{2}, \\
-    |g(x) - g(a)| &< \frac{\epsilon}{2}.
+    |f(x) - f(a)| &< \frac{\epsilon}{2}\\
+    |g(x) - g(a)| &< \frac{\epsilon}{2}
     \end{align*}
-    Then, we have:
+    Putting it together:
     \begin{align*}
-    |f(x) + g(x) - (f(a) + g(a))| &= |(f(x) - f(a)) + (g(x) - g(y))| \\
-    &\leq |f(x) - f(a)| + |g(x) - g(a)| \\
-    &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+        \left| (f+g)(x) - (f+g)(a) \right|
+        &= |f(x) + g(x) - f(a) - g(a)|\\
+        &= |f(x) - f(a) + g(x) - g(a)|\\
+        &\leq |f(x) - f(a)| + |g(x) - g(a)|
+        < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
     \end{align*}
     Hence, $f + g$ is continuous at $a$. Since $a$ was arbitrary, $f + g$ is continuous on $D$.
 \end{proof}
 
-\begin{theorem}[The Product of Continuous Functions is Continuous]
+
+
+\pagebreak
+\begin{theorem}[The product of continuous functions is continuous]
     If $f$ and $g$ are continuous functions on a set $D \subseteq \mathbb{R}$, then $f \cdot g$ is continuous on $D$.
 \end{theorem}
 
 \begin{proof}
     Assume $f$ and $g$ are continuous on $D$. We need to show that $f \cdot g$ is continuous at any $a \in D$. Let $a \in D$ and $\epsilon > 0$. By the continuity of $f$ and $g$, we have:
+
     \begin{itemize}
-        \item There exists $\delta_1 > 0$ such that for all $x \in D$, if $|x - a| < \delta_1$, then $|f(x) - f(a)| < \frac{\epsilon}{2|g(a)| + 1}$.
-        \item There exists $\delta_2 > 0$ such that for all $y \in D$, if $|x - y| < \delta_2$, then $|g(x) - g(a)| < \frac{\epsilon}{2(\epsilon + |f(a)|)}$.
+        \item There $\exists \delta_1 > 0$ such that
+        $\forall x \in D$, if $|x - a| < \delta_1$,
+        then $\displaystyle |f(x) - f(a)|
+            < \frac{\epsilon}{2|g(a)| + 1}$.
+
+        The $1$ in the denominator is just to ensure we don't divide by $0$.
+
+        \item There $\exists \delta_2 > 0$ such that
+        $\forall x \in D$, if $|x - a| < \delta_2$,
+        then $\displaystyle |g(x) - g(a)|
+            < \frac{\epsilon}{2(\epsilon + |f(a)|)}$.
     \end{itemize}
-    Choose $\delta = \min(\delta_1, \delta_2)$. Then $\delta > 0$ and for all $x \in D$, if $|x - a| < \delta$, we have:
+
+    Choose $\delta \coloneqq \min(\delta_1, \delta_2)$. Then $\delta > 0$ since both $\delta_1 > 0$ and $\delta_2 > 0$.
+    
+    Let $x\in D$. If $|x - a| < \delta$, we have:
     \begin{align*}
-    |f(x) - f(a)| &< \frac{\epsilon}{2|g(a)| + 1}, \\
-    |g(a) - g(x)| &< \frac{\epsilon}{2(\epsilon + |f(a)|)}.
+        |f(x) - f(a)| &< \frac{\epsilon}{2|g(a)| + 1}\\
+        |g(a) - g(x)| &< \frac{\epsilon}{2(\epsilon + |f(a)|)}
     \end{align*}
-    Then, we have:
+    Putting it together:
     \begin{align*}
-    |(f \cdot g)(x) - (f \cdot g)(a)| &= |f(x) \cdot g(x) - f(a) \cdot g(a)| \\
-    &= |f(x) \cdot g(x) - f(x) \cdot g(a) + f(x) \cdot g(a) - f(a) \cdot g(a)| \\
-    &= |f(x) \cdot (g(x) - g(a)) + (f(x) - f(a)) \cdot g(a)| \\
-    &\leq |f(x) \cdot (g(x) - g(a))| + |(f(x) - f(a)) \cdot g(a)| \\
-    &= |f(x)| \cdot |g(x) - g(a)| + |f(x) - f(a)| \cdot |g(a)|.
+        |(f \cdot g)(x) - (f \cdot g)(a)|
+        &= |f(x) \cdot g(x) - f(a) \cdot g(a)| \\
+        &= |f(x) \cdot g(x) - f(x) \cdot g(a) + f(x) \cdot g(a) - f(a) \cdot g(a)| \\
+        &= \bigl|f(x) \cdot \bigl(g(x) - g(a)\bigr)
+            + \bigl(f(x) - f(a)\bigr) \cdot g(a) \bigr| \\
+        &\leq \bigl|f(x) \cdot (g(x) - g(a)) \bigr|
+            \: + \: \bigl|(f(x) - f(a)) \cdot g(a) \bigr| \\
+        &= |f(x)| \cdot |g(x) - g(a)|+ |f(x) - f(a)| \cdot |g(a)|\\
+        %
+        &< |f(x)| \cdot \frac{\epsilon}{2 (\epsilon + |f(a)|)} + \frac{\epsilon}{2 |g(a)| + 1} \cdot |g(a)| \\
+        &= \frac{\epsilon}{2} \cdot \frac{|f(x)|}{\epsilon + |f(a)|}
+            + \frac{\epsilon}{2} \frac{|g(a)|}{|g(a)| + 1} \\
+        &\leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
     \end{align*}
-    Using the previous inequalities, we get:
-    \begin{align*}
-    |f(x)| \cdot |g(x) - g(a)| &< |f(x)| \cdot \frac{\epsilon}{2(\epsilon + |f(a)|)}, \\
-    |f(x) - f(a)| \cdot |g(a)| &< \frac{\epsilon}{2|g(a)| + 1} \cdot |g(a)|.
-    \end{align*}
-    Thus, we have:
-    \begin{align*}
-    |(f \cdot g)(x) - (f \cdot g)(a)| &< |f(x)| \cdot \frac{\epsilon}{2(\epsilon + |f(a)|)} + \frac{\epsilon}{2|g(a)| + 1} \cdot |g(a)| \\
-    &= \frac{|f(x)| \cdot \epsilon}{2(\epsilon + |f(a)|)} + \frac{\epsilon \cdot |g(a)|}{2|g(a)| + 1} \\
-    &\leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
-    \end{align*}
+    In the last step, we made use of the triangle inequality:
+    \begin{align}
+        |f(x) - f(a)| < \frac{\epsilon}{2|g(a)| + 1} \leq \epsilon
+        \quad \implies \quad
+        |f(x)| \leq \epsilon + |f(a)|
+    \end{align}
+
     Hence, $f \cdot g$ is continuous at $a$. Since $a$ was arbitrary, $f \cdot g$ is continuous on $D$.
 \end{proof}
