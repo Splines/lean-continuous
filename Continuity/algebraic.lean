@@ -30,24 +30,21 @@ theorem sum_of_two_continuous_functions_is_continuous
     exact h_εbigger0
 
   -- Choice of `δ`
-  choose δ₁ h_δ₁ using h_f_continuous_short
-  choose δ₂ h_δ₂ using h_g_continuous_short
+  obtain ⟨δ₁, δ₁_positive, hδ₁⟩ := h_f_continuous_short
+  obtain ⟨δ₂, δ₂_positive, hδ₂⟩ := h_g_continuous_short
   use min δ₁ δ₂
 
   constructor
   -- min δ₁ δ₂ > 0
-  · simp
-    constructor
-    · exact h_δ₁.1
-    · exact h_δ₂.1
+  · apply lt_min δ₁_positive δ₂_positive
 
   -- Continuity of f + g
   · intro x h_δ_criterion
 
     have h_f_estimate : |f x - f a| < ε/2 := by
-      apply h_δ₁.2 x (lt_of_lt_of_le h_δ_criterion (min_le_left δ₁ δ₂))
+      apply hδ₁ x (lt_of_lt_of_le h_δ_criterion (min_le_left δ₁ δ₂))
     have h_g_estimate : |g x - g a| < ε/2 := by
-      apply h_δ₂.2 x (lt_of_lt_of_le h_δ_criterion (min_le_right δ₁ δ₂))
+      apply hδ₂ x (lt_of_lt_of_le h_δ_criterion (min_le_right δ₁ δ₂))
 
     simp
     calc |f x + g x - (f a + g a)|
