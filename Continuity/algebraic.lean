@@ -1,41 +1,63 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Continuity.continuous
-/-
-The sum of continuous functions is continuous. Can you complete the proof below (remove the sorries)?
--/
 
-theorem cont_sum (D : Set ℝ) (f: D → ℝ) (g: D → ℝ) (hf: IsContinuous D f) (hg: IsContinuous D g) : IsContinuous D (f + g) := by
-  intro x
-  intro ε hε
+/-- The sum of two continuous functions is continuous. -/
+theorem sum_of_two_continuous_functions_is_continuous
+    (D : Set ℝ) (f: D → ℝ) (g: D → ℝ)
+    (h_f_continuous: IsContinuous D f) (h_g_continuous: IsContinuous D g)
+    : IsContinuous D (f + g) := by
+
+  intro a
   dsimp [IsContinuousAt]
-  have hf1 : ∃ δ₁ > 0, ∀ y ∈ D, |x - y| < δ₁ → |f x - f y| < ε/2 := by
-    apply hf x (ε / 2)
+  intro ε h_εbigger0
+
+  -- Individual continuity of f and g
+  have h_f_inequality : ∃ δ₁ > 0, ∀ x : D,
+      |x.val - a| < δ₁ → |f x - f a| < ε/2 := by
+    apply h_f_continuous
     simp
-    exact hε
-  have hg1 : ∃ δ₂ > 0, ∀ y ∈ D, |x - y| < δ₂ → |g x - g y| < ε/2 := by
-    apply hg x (ε / 2)
+    exact h_εbigger0
+
+  have h_g_inequality : ∃ δ₂ > 0, ∀ x : D,
+      |x.val - a| < δ₂ → |g x - g a| < ε/2 := by
+    apply h_g_continuous
     simp
-    exact hε
-  choose δ₁ hδ₁ using hf1
-  choose δ₂ hδ₂ using hg1
+    exact h_εbigger0
+
+  -- Choice of `δ`
+  choose δ₁ h_δ₁ using h_f_inequality
+  choose δ₂ h_δ₂ using h_g_inequality
   use min δ₁ δ₂
+
   constructor
+  -- min δ₁ δ₂ > 0
   · simp
     constructor
-    · exact hδ₁.1
-    · exact hδ₂.1
-  · intro y hmin
-    have f_con : |f x - f y| < ε/2 := by
-      apply hδ₁.2 y hmin
-      linarith
-    have g_con : |g x - g y| < ε/2 := by
-      apply hδ₂.2 y hmin
-      linarith
+    · exact h_δ₁.1
+    · exact h_δ₂.1
+
+  -- Continuity of f + g
+  · intro x h_δ_criterion
+    have f_estimate : |f x - f a| < ε/2 := by
+      apply h_δ₁.2 x (lt_of_lt_of_le h_δ_criterion (min_le_left δ₁ δ₂))
+    have g_estimate : |g x - g a| < ε/2 := by
+      apply h_δ₂.2 x (lt_of_lt_of_le h_δ_criterion (min_le_right δ₁ δ₂))
+
     simp
-    calc |f x + g x - (f y + g y)| = |(f x - f y) + (g x - g y)| := by ring_nf
-      _ ≤ |f x - f y| + |g x - g y| := by exact abs_add (f x - f y) (g x - g y)
-      _  < ε/2 + ε/2 := add_lt_add f_con g_con
-      _ = ε := by linarith
+    calc |f x + g x - (f a + g a)|
+
+      _ = |(f x - f a) + (g x - g a)|
+        := by ring_nf
+
+      _ ≤ |f x - f a| + |g x - g a|
+        := by exact abs_add (f x - f a) (g x - g a)
+
+      _ < ε/2 + ε/2
+        := add_lt_add f_estimate g_estimate
+
+      _ = ε
+        := by linarith
+
 /-
 Try to adapt the proof that the sum of continuous functions is continuous to show that the product of continuous functions is continuous.
 -/
