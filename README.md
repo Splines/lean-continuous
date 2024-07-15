@@ -11,8 +11,10 @@ __By Felix Lentze & Dominic Plein as part of the [CompAssistedMath2024](https://
 In this repository, we give an introduction to **continuous functions** and formalize them in the functional programming language and mathematical proof-solver Lean4. Continuous functions play a crucial role in many math disciplines and are taught at the very beginning of math studies.
 
 In this repo, you find:
-- [A LaTeX document](./HandProof/main.pdf) that contains manual proofs. All proofs that were formalized in Lean4 are also written out in this document for reference. It's suggested to first comprehend the proof there, then look at the Lean4 code to see how it's formalized.
-- The [Lean4 code](./src) with different files that correspond to the sections in the LaTeX document:
+
+- [**A LaTeX document**](./HandProof/main.pdf) that contains manual proofs. All proofs that were formalized in Lean4 are also written out in this document for reference. It's suggested to first comprehend the proof there, then look at the Lean4 code to see how it's formalized.
+
+- The [**Lean4 code**](./Continuity/) with different files that correspond to the sections in the LaTeX document:
   - [Continuous Functions](./Continuity/continuous.lean): Here we give the definition of continuous functions.
   - [Examples](./Continuity/examples.lean): Here we give some examples of continuous functions.
   - [Algebraic properties](./Continuity/algebraic.lean): Here we prove that the sum and the product of two continuous functions are continuous again.
@@ -21,7 +23,7 @@ In this repo, you find:
 
 ## 💻 Installation
 
-See [this guide](https://lean-lang.org/lean4/doc/setup.html) for how to install Lean4 on your machine. In this guide, you will install `elan` (the Lean version manager). It will also install `Lake` for you, the Lean package manager.
+See [this guide](https://lean-lang.org/lean4/doc/setup.html) for how to install Lean4 on your machine. It guides you through how to install `elan`, the Lean version manager, which also installs `Lake` for you, the Lean package manager.
 
 Then run `lake exec cache get` in the root of this project. Don't run `lake update` as we want to stick with the specific version of Lean specified pinned via the `lake-manifest.json` file.
 
