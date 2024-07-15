@@ -1,13 +1,15 @@
 /-
 # Continuity of real functions
 
-By Judith Ludwig, Christian Merten and Florent Schaffhauser,
+Initial version by Judith Ludwig, Christian Merten and Florent Schaffhauser,
 Proseminar on computer-assisted mathematics,
 Heidelberg, Summer Semester 2024
 
 Edited by Felix Lentze and Dominic Plein.
 
-In this project, we show basic properties of continuous functions. The goal isto show that continuity is equivalent to left and right continuity combined.
+In this project, we show basic properties of continuous functions, give some
+examples and prove basic properties. We also show that continuity is equivalent
+to left- and right-continuity combined.
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
