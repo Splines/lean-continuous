@@ -42,18 +42,27 @@ def IsRightContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
 @[simp]
 noncomputable def Heaviside (x : ℝ) : ℝ := if x < 0 then 0 else 1
 
-/-- The Heaviside function is right-continuous -/
-example : IsRightContinuousAt Set.univ Heaviside 0 trivial := by
-  intro ε hε
+/-- The Heaviside function is right-continuous. -/
+example : IsRightContinuousAt Set.univ (fun x ↦ Heaviside x) ⟨0, trivial⟩ := by
+  intro ε hεbigger0
   use 1
   simp
-  intro y hy _
-  -- Try to do this with `split_ifs` instead.
-  rw [if_neg]
+  intro x h_x_from_right _h_xδ_criterion
+
+  -- Variant 1: via `split_ifs`
+  split_ifs with h_xvalue
+  · contrapose h_x_from_right
+    simp only [not_lt]
+    exact le_of_lt h_xvalue
   · simp only [sub_self, abs_zero]
-    positivity
-  · simp only [not_lt]
-    exact le_of_lt hy
+    exact hεbigger0
+
+  -- Alternative way (simpler approach in our opinion)
+  -- rw [if_neg]
+  -- · simp only [sub_self, abs_zero]
+  --   exact hεbigger0
+  -- · simp only [not_lt]
+  --   exact le_of_lt h_x_from_right
 
 /-- The Heaviside function is not continuous (at `a = 0`). -/
 example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
