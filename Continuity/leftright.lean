@@ -86,63 +86,76 @@ example : ¬IsContinuousAt Set.univ (fun x ↦ Heaviside x) ⟨0, trivial⟩ := 
   have h_blow_up_math : 1 < 1/2 := by
     -- replace `1` by `|Heaviside x - Heaviside 0|` (`h_heaviside`)
     -- use the fact that `|Heaviside x - Heaviside 0| < ε` (`h_heaviside_ε`)
+    -- use the definition of `ε = 1/2`
     sorry
 
-  -- Apply contradiction
   exact absurd h_blow_up_math (by norm_num)
 
-
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
--- TODO from hereon
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 -- # Equivalence of continuity and left- and right-continuity
 --------------------------------------------------------------------------------
 
-theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: D → ℝ) (x : D) : (IsContinuousAt D f x) ↔ (IsLeftContinuousAt D f x ∧ IsRightContinuousAt D f x) := by
+theorem LeftRightContinuousIffIsContinuous
+    (D : Set ℝ) (f: D → ℝ) (a : D)
+    : (IsContinuousAt D f a)
+      ↔ (IsLeftContinuousAt D f a ∧ IsRightContinuousAt D f a) := by
+
   constructor
-  -- left side implies right side
-  · intro h
+
+  -- Left side implies right side,
+  -- i.e. (continuity) → (left- and right-continuity)
+  · intro h_continuous
     constructor
-    · intro ε hε
-      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith)
+
+    -- Left-continuity
+    · dsimp [IsLeftContinuousAt]
+      intro ε h_εbigger0
+      obtain ⟨δ, h_δbigger0, h_δ⟩ := h_continuous ε (by linarith)
       use δ
-      constructor
-      · exact hδ
-      · intros y hy yltx
-        exact hδ_prop y hy
-    · intro ε hε
-      obtain ⟨δ, hδ, hδ_prop⟩ := h (ε) (by linarith)
+      use h_δbigger0
+      intro x _h_x_smaller_a h_x_δ_criterion
+      exact h_δ x h_x_δ_criterion
+
+    -- Right-continuity
+    · dsimp [IsLeftContinuousAt]
+      intro ε h_εbigger0
+      obtain ⟨δ, h_δbigger0, h_δ⟩ := h_continuous ε (by linarith)
       use δ
-      constructor
-      · exact hδ
-      · intros y hy hyx
-        exact hδ_prop y hy
-  -- right side implies left side
-  · intro h
-    rcases h with ⟨l, r⟩
-    intro ε hε
-    obtain ⟨δ₁, hδ₁, hδ₁_prop⟩ := l (ε) (by linarith)
-    obtain ⟨δ₂, hδ₂, hδ₂_prop⟩ := r (ε) (by linarith)
+      use h_δbigger0
+      intro x _h_x_bigger_a h_x_δ_criterion
+      exact h_δ x h_x_δ_criterion
+
+  -- Right side implies left side,
+  -- i.e. (left- and right-continuity) → (continuity)
+  · intro h_left_and_right_continuous
+    rcases h_left_and_right_continuous with ⟨left_continuous, right_continuous⟩
+    intro ε h_εbigger0
+
+    -- `δ₁` and `δ₂` obtained from left- and right-continuity
+    obtain ⟨δ₁, hδ₁, hδ₁_prop⟩ := left_continuous ε (by linarith)
+    obtain ⟨δ₂, hδ₂, hδ₂_prop⟩ := right_continuous (ε) (by linarith)
     use min δ₁ δ₂
-    constructor
-    · apply lt_min hδ₁ hδ₂
-    · intro y hy hyδ
-      by_cases hyx : y < x
-      · apply hδ₁_prop y hy hyx
-        apply lt_of_lt_of_le hyδ
-        apply min_le_left
-      · push_neg at hyx
-        · by_cases hex : y = x
-          · rewrite [hex]
-            simp [abs_zero, hε]
-          · have h0 : x < y := by
-              push_neg at hex
-              exact lt_of_le_of_ne hyx (id (Ne.symm hex))
-            apply hδ₂_prop y hy h0
-            apply lt_of_lt_of_le hyδ
-            apply min_le_right
+
+    use lt_min hδ₁ hδ₂
+    intro x h_x_δ_criterion
+
+    by_cases h_a_value : x < a
+    -- x < a (use left-continuity)
+    · apply hδ₁_prop x h_a_value
+      apply lt_of_lt_of_le h_x_δ_criterion
+      apply min_le_left
+
+    -- x ≤ a
+    · push_neg at h_a_value
+      by_cases h_a_value' : x = a
+      -- x = a
+      · rewrite [h_a_value']
+        simp [abs_zero, h_εbigger0]
+      -- x > a (use right-continuity)
+      · have h_x_smaller_a : x > a := by
+          push_neg at h_a_value'
+          exact lt_of_le_of_ne h_a_value (id (Ne.symm h_a_value'))
+        apply hδ₂_prop x h_x_smaller_a
+        apply lt_of_lt_of_le h_x_δ_criterion
+        apply min_le_right
