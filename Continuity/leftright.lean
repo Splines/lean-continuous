@@ -1,22 +1,48 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Continuity.continuous
-/-
-Definition of a right continuous function. Can you explain the definition?
--/
-def IsRightContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
-  ∀ ε > 0, ∃ δ > 0, ∀ x : D, x.val > a.val
-  (|x.val - a.val| < δ  →  |f x - f a| < ε)
-@[simp]
-/-
--/
-def IsLeftContinuousAt (D : Set ℝ) (f : D → ℝ) (x : D) : Prop :=
-  ∀ ε > 0, ∃ δ > 0, ∀ a ∈ D, a < x → |x - a| < δ → |f x - f a| < ε
-@[simp]
-/-
--/
-noncomputable def Heaviside (x : ℝ) : ℝ := if x < 0 then 0 else 1
-/- The Heaviside function is right continuous. -/
 
+
+--------------------------------------------------------------------------------
+-- # Definition of left- and right-continuity.
+--------------------------------------------------------------------------------
+
+/-- Definition of a left-continuous function `f: D → ℝ`. -/
+def IsLeftContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
+  ∀ ε > 0, ∃ δ > 0, ∀ x : D,
+  x < a → (|x.val - a.val| < δ  →  |f x - f a| < ε)
+
+/-- Definition of a right-continuous function `f: D → ℝ`. -/
+def IsRightContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
+  ∀ ε > 0, ∃ δ > 0, ∀ x : D,
+  x > a → (|x.val - a.val| < δ  →  |f x - f a| < ε)
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- TODO from hereon
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+-- # Heaviside function as example
+--------------------------------------------------------------------------------
+
+/--
+  Definition of the Heaviside function, often denoted `Θ` in literature.
+
+  By the keyword `noncomputable`, we signal Lean4 that this function does not have
+  a constructive computational method within the confines of Lean's type theory
+  and logic. You may want to look up "decidability in computer science" for more
+  information on this topic, e.g. the halting problem and deterministic finite
+  automata.
+
+  The `@[simp]` attribute tells Lean to use this definition as a simplification rule
+  when simplifying expressions via the `simp` tactic.
+-/
+@[simp]
+noncomputable def Heaviside (x : ℝ) : ℝ := if x < 0 then 0 else 1
+
+/-- The Heaviside function is right-continuous -/
 example : IsRightContinuousAt Set.univ Heaviside 0 trivial := by
   intro ε hε
   use 1
@@ -29,9 +55,7 @@ example : IsRightContinuousAt Set.univ Heaviside 0 trivial := by
   · simp only [not_lt]
     exact le_of_lt hy
 
-/-
-But the Heaviside function is not continuous!
--/
+/-- The Heaviside function is not continuous (at `a = 0`). -/
 example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
   intro h_cont
   let ε := (1:ℝ)/2
@@ -57,8 +81,12 @@ example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
     exact h3
   have h6 : |Heaviside x - Heaviside 0| < |Heaviside x - Heaviside 0| := lt_of_lt_of_le h5 h4
   apply lt_irrefl |Heaviside x - Heaviside 0| h6
-/-
--/
+
+
+--------------------------------------------------------------------------------
+-- # Equivalence of continuity and left- and right-continuity
+--------------------------------------------------------------------------------
+
 theorem LeftRightContinuousIffIsContinuous (D : Set ℝ) (f: D → ℝ) (x : D) : (IsContinuousAt D f x) ↔ (IsLeftContinuousAt D f x ∧ IsRightContinuousAt D f x) := by
   constructor
   -- left side implies right side
