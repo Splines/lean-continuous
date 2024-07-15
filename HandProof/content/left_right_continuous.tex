@@ -77,11 +77,11 @@
 \subsection{Equivalence of continuity and left- and right-continuity}
 
 \begin{theorem}
-    A function $f : D \to \R$ is continuous at a point $a \in D$ if and only if it is both left-continuous and right-continuous at $a$.
+    A function $f : D \subseteq \R \to \R$ is continuous at a point $a \in D$ if and only if it is both left-continuous and right-continuous at $a$.
 \end{theorem}
 
 \begin{proof}
-    Let $a \in D$ and consider a function $f : D \to \R$. That is,
+    Let $a \in D$ and consider a function $f : D \subset \R \to \R$. That is,
 
     \begin{itemize}
     \item[($\Rightarrow$)] Assume $f$ is continuous at $a$.
@@ -92,7 +92,7 @@
         \end{align*}
         This implies both left- and right-continuity at $a$ due to $x < a$ and $x > a$ being stronger conditions than $x \in D$.
 
-    \item[($\Leftarrow$)] Assume $f$ is both left- and right-continuous at $a$.
+    \item[($\Leftarrow$)] Assume $f$ is both left- and right-continuous at $a$. Let $\epsilon > 0$.
     
         Since $f$ is left-continuous: $\exists \delta_1 > 0 \quad
         \forall x \in D, x < a: \quad
