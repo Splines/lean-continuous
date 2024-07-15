@@ -1,63 +1,82 @@
 \section{Left- and Right-Continuous Functions}
 
-\begin{definition}[Definition of a Left Continuous Function]\label{def:leftcontinuous}
-    A function $f : D \to \mathbb{R}$ is \textit{right continuous at a point} $a \in D$ if 
-    \[
-        \forall \epsilon > 0, \exists \delta > 0, \forall x \in D, x > a \Rightarrow (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon).
-    \]
-    If $f$ is left continuous at every point in the domain $D$, then we say that $f$ is \textit{left continuous on} $D$.
+
+\subsection{Definitions}
+
+\begin{definition}
+    A function $f : D \to \mathbb{R}$ is \textit{left-continuous at a point} $a \in D$ if
+    \begin{align*}
+    \boxed{
+        \forall \epsilon > 0 \quad \exists \delta > 0
+        \quad \forall x \in D, \: x > a: \quad
+        \Bigl(|x - a| < \delta \: \implies \: |f(x) - f(a)| < \epsilon \Bigr)
+    }
+    \end{align*}
+    If $f$ is left-continuous at every point in $D$, then we say that $f$ is \textit{left-continuous on} $D$.
 \end{definition}
 
-\begin{definition}[Definition of a Right Continuous Function]\label{def:rightcontinuous}
-    A function $f : D \to \mathbb{R}$ is \textit{right continuous at a point} $a \in D$ if 
-    \[
-        \forall \epsilon > 0, \exists \delta > 0, \forall x \in D, x < a \Rightarrow (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon).
-    \]
-    If $f$ is right continuous at every point in the domain $D$, then we say that $f$ is \textit{right continuous on} $D$.
+\begin{definition}
+    A function $f : D \to \mathbb{R}$ is \textit{right-continuous at a point} $a \in D$ if
+    \begin{align*}
+    \boxed{
+        \forall \epsilon > 0 \quad \exists \delta > 0
+        \quad \forall x \in D, \: x < a: \quad
+        \Bigl(|x - a| < \delta \: \implies \: |f(x) - f(a)| < \epsilon \Bigr)
+    }
+    \end{align*}
+    If $f$ is right-continuous at every point in $D$, then we say that $f$ is \textit{right-continuous on} $D$.
 \end{definition}
 
-\begin{definition}[Definition of the Heaviside Function]\label{def:heaviside}
-    The Heaviside function $H : \mathbb{R} \to \mathbb{R}$ is defined as
-    \[
-    H(x) = \begin{cases} 
-        0 & \text{if } x < 0, \\
-        1 & \text{otherwise}.
-    \end{cases}
-    \]
+
+
+
+\subsection{Heaviside function as example}
+
+\begin{definition}
+    The Heaviside function $\Theta : \mathbb{R} \to \{0, 1\}$ is defined as
+    \begin{align*}
+        \Theta(x) \coloneqq \begin{cases} 
+            0 & \text{for } x < 0 \\
+            1 & \text{for } x \geq 0
+        \end{cases}
+    \end{align*}
 \end{definition}
 
-\begin{theorem}[Heaviside Function is Right Continuous at 0]
-    Let $f: \R \to \R$ be the Heaviside Function. Then $f$ is right continuous in $0$.
+
+\begin{theorem}
+    Let $\Theta: \R \to \R$ denote the Heaviside function. $\Theta$ is right-continuous at $0$.
 \end{theorem}
 
 \begin{proof}
-    Let $\epsilon > 0$. Choose $\delta = 1$. Then, for any $x > 0$, we have:
-    \begin{align*}
-        &\text{Since } x > 0, \text{we have } H(x) = 1. \\
-        &\text{So, } |H(x) - H(0)| = |1 - 1| = 0 < \epsilon.
-    \end{align*}
+    We consider the point $0$. Let $\epsilon > 0$. Choose $\delta \coloneqq 1 > 0$.
+
+    Let $x \in \R$, $x > 0$ and $|x - 0| < \delta$, \ie $|x| < 1$. In summary, $x\in (0,1)$. Then $\Theta(x) = 1$.\\
+    We find: $|\Theta(x) - \Theta(0)| = |1 - 1| = 0 < \epsilon$. This proves that $\Theta$ is right-continuous at $0$.
 \end{proof}
 
-\begin{theorem}[Heaviside Function is Not Continuous at 0]
-    Let $f: \R \to \R$ be the Heaviside Function. Then $f$ is not continuous in $0$.
+
+\begin{theorem}
+    Let $\Theta: \R \to \R$ denote the Heaviside function. $\Theta$ is not continuous at $0$.
 \end{theorem}
 
 \begin{proof}
-    Assume, for contradiction, that $H$ is continuous at 0. Let $\epsilon = \frac{1}{2}$. Then there exists $\delta > 0$ such that for all $x \in D$, if $|x - 0| < \delta$, then $|H(x) - H(0)| < \epsilon$. Consider $x = -\frac{\delta}{2}$. We have:
+    Assume, for contradiction, that $\Theta$ is continuous at 0. Let $\epsilon = 1/2$. Then there $\exists \delta > 0$, such that $\forall x \in D$, if $|x - 0| < \delta$, then $|\Theta(x) - \Theta(0)| < \epsilon = 1/2$. Consider $\displaystyle x = -\delta/2$, which fulfills $|x| < \delta$ since $|- \delta / 2| = \delta / 2 < \delta$.
+
+    For our choice of $x$, we find $\Theta(x) = 0$ since $x < 0$.
+    Therefore:
     \begin{align*}
-    & x < 0 \implies H(x) = 0, \\
-    & \text{and } |x| < \delta \implies |-\frac{\delta}{2}| < \delta, \\
-    & \text{So, } |H(x) - H(0)| = |0 - 1| = 1 \geq \frac{1}{2} = \epsilon.
+        |\Theta(x) - \Theta(0)| = |0 - 1| = 1
     \end{align*}
-    This is a contradiction, so $H$ is not continuous at $0$.
+    This is a contradiction to $|\Theta(x) - \Theta(0)| < 1/2$. Therefore, $\Theta$ is not continuous at $0$.
 \end{proof}
 
 
 
 
 \pagebreak
+\subsection{Left- and right-continuous $\iff$ continuous}
 
-\begin{theorem}[Left and Right Continuous $\iff$ Continuous]
+\begin{theorem}
     A function $f : D \to \R$ is continuous at a point $x \in D$ if and only if it is both left continuous and right continuous at $x$.
 \end{theorem}
 
