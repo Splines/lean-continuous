@@ -8,7 +8,7 @@
     \begin{align*}
     \boxed{
         \forall \epsilon > 0 \quad \exists \delta > 0
-        \quad \forall x \in D, \: x > a: \quad
+        \quad \forall x \in D, \: x < a: \quad
         \Bigl(|x - a| < \delta \: \implies \: |f(x) - f(a)| < \epsilon \Bigr)
     }
     \end{align*}
@@ -20,7 +20,7 @@
     \begin{align*}
     \boxed{
         \forall \epsilon > 0 \quad \exists \delta > 0
-        \quad \forall x \in D, \: x < a: \quad
+        \quad \forall x \in D, \: x > a: \quad
         \Bigl(|x - a| < \delta \: \implies \: |f(x) - f(a)| < \epsilon \Bigr)
     }
     \end{align*}
@@ -74,41 +74,44 @@
 
 
 \pagebreak
-\subsection{Left- and right-continuous $\iff$ continuous}
+\subsection{Left- and right-continuous is the same as continuous}
 
 \begin{theorem}
-    A function $f : D \to \R$ is continuous at a point $x \in D$ if and only if it is both left continuous and right continuous at $x$.
+    A function $f : D \to \R$ is continuous at a point $a \in D$ if and only if it is both left-continuous and right-continuous at $a$.
 \end{theorem}
 
-\begin{proof}~\newline
+\begin{proof}
+    Let $a \in D$ and consider a function $f : D \to \R$. That is,
+
     \begin{itemize}
     \item[($\Rightarrow$)] Assume $f$ is continuous at $a$.
-        \begin{itemize}
-        \item To show $f$ is left continuous at $a$:
         \begin{align*}
-        &\forall \epsilon > 0, \exists \delta > 0 \text{ such that } \forall x \in D, (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon). \\
-        & \text{This implies the definition of left continuity.}
+            \forall \epsilon > 0 \quad \exists \delta > 0
+            \quad \forall x \in D: \quad
+            \Bigl(|x - a| < \delta \: \implies \: |f(x) - f(a)| < \epsilon \Bigr)
         \end{align*}
+        This implies both left- and right-continuity at $a$ due to $x < a$ and $x > a$ being stronger conditions than $x \in D$.
 
-        \item To show $f$ is right continuous at $a$:
-        \begin{align*}
-        &\forall \epsilon > 0, \exists \delta > 0 \text{ such that } \forall x \in D, (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon). \\
-        & \text{This implies the definition of right continuity.}
-        \end{align*}
+    \item[($\Leftarrow$)] Assume $f$ is both left- and right-continuous at $a$.
+    
+        Since $f$ is left-continuous: $\exists \delta_1 > 0 \quad
+        \forall x \in D, x < a: \quad
+        \bigl(|x - a| < \delta_1 \implies |f(x) - f(a)| < \epsilon\bigr)$
+
+        Since $f$ is right-continuous: $\exists \delta_2 > 0 \quad
+        \forall x \in D, x > a: \quad
+        \bigl(|x - a| < \delta_2 \implies |f(x) - f(a)| < \epsilon\bigr)$
+
+        Choose $\delta \coloneqq \min(\delta_1, \delta_2)$. Let $x \in D$ and $|x - a| < \delta$. Due to our choice of $\delta$, we also have $|x-a| < \delta_1$ and $|x-a| < \delta_2$.
+        
+        Now consider these cases:
+
+        \begin{itemize}
+            \item If $x < a$, then $|f(x) - f(a)| < \epsilon$ by left-continuity.
+            \item If $x > a$, then $|f(x) - f(a)| < \epsilon$ by right-continuity.
+            \item If $x = a$, then $|f(x) - f(a)| = 0 < \epsilon$.
         \end{itemize}
 
-    \item[($\Leftarrow$)] Assume $f$ is both left continuous and right continuous at $a$.
-        \begin{itemize}
-        \item We need to show $\forall \epsilon > 0, \exists \delta > 0 \text{ such that } \forall x \in D, (|x - a| < \delta \rightarrow |f(x) - f(a)| < \epsilon).$
-        \begin{align*}
-        & \text{Since $f$ is left continuous, } \exists \delta_1 > 0 \text{ such that } \forall x \in D, (x < a \rightarrow |x - a| < \delta_1 \rightarrow |f(x) - f(a)| < \epsilon). \\
-        & \text{Since $f$ is right continuous, } \exists \delta_2 > 0 \text{ such that } \forall x \in D, (x > a \rightarrow |x - a| < \delta_2 \rightarrow |f(x) - f(a)| < \epsilon). \\
-        & \text{Let } \delta = \min(\delta_1, \delta_2). \text{ Then, for any } y \in D, \\
-        & \text{if } |x - a| < \delta, \text{ then either } a < x \text{ or } a > x. \\
-        & \text{If } a < x, \text{ then } |x - a| < \delta_1 \text{ and } |f(x) - f(a)| < \epsilon \text{ by left continuity.} \\
-        & \text{If } a > x, \text{ then } |x - a| < \delta_2 \text{ and } |f(x) - f(a)| < \epsilon \text{ by right continuity.} \\
-        & \text{Thus, } f \text{ is continuous at } a.
-        \end{align*}
-        \end{itemize}
+        Hence, $f$ is continuous at $a$.
     \end{itemize}
 \end{proof}
