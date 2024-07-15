@@ -66,7 +66,7 @@ example : ¬IsContinuousAt Set.univ (fun x ↦ Heaviside x) ⟨0, trivial⟩ := 
 
   let x := -δ/2
   have h_x_smaller_zero : x < 0 := by dsimp [x]; linarith
-  have h_x_smaller_delta : x < δ := by dsimp [x]; linarith
+  have _h_x_smaller_delta : x < δ := by dsimp [x]; linarith
   have h_x_smaller_delta' : |x| < δ := by
     dsimp [x]
     simp only [abs_lt]
@@ -134,8 +134,8 @@ theorem LeftRightContinuousIffIsContinuous
     obtain ⟨δ₁, hδ₁, hδ₁_prop⟩ := left_continuous ε (by linarith)
     obtain ⟨δ₂, hδ₂, hδ₂_prop⟩ := right_continuous (ε) (by linarith)
     use min δ₁ δ₂
-
     use lt_min hδ₁ hδ₂
+
     intro x h_x_δ_criterion
 
     by_cases h_a_value : x < a
