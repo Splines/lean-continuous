@@ -2,7 +2,7 @@ import Continuity.continuous
 
 
 --------------------------------------------------------------------------------
--- # Definition of left- and right-continuity.
+-- # Definition of left- and right-continuity
 --------------------------------------------------------------------------------
 
 /-- Definition of a left-continuous function `f: D → ℝ`. -/
@@ -14,13 +14,6 @@ def IsLeftContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
 def IsRightContinuousAt (D : Set ℝ) (f : D → ℝ) (a : D) : Prop :=
   ∀ ε > 0, ∃ δ > 0, ∀ x : D,
   x > a → (|x.val - a.val| < δ  →  |f x - f a| < ε)
-
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
--- TODO from hereon
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
 
 
 --------------------------------------------------------------------------------
@@ -47,50 +40,64 @@ example : IsRightContinuousAt Set.univ (fun x ↦ Heaviside x) ⟨0, trivial⟩ 
   intro ε hεbigger0
   use 1
   simp
-  intro x h_x_from_right _h_xδ_criterion
+  intro x h_x_gt_zero _h_xδ_criterion
 
   -- Variant 1: via `split_ifs`
   split_ifs with h_xvalue
-  · contrapose h_x_from_right
-    simp only [not_lt]
-    exact le_of_lt h_xvalue
+  · linarith
   · simp only [sub_self, abs_zero]
     exact hεbigger0
 
-  -- Alternative way (simpler approach in our opinion)
+  -- Variant 2: via `if_neg`
   -- rw [if_neg]
   -- · simp only [sub_self, abs_zero]
   --   exact hεbigger0
   -- · simp only [not_lt]
-  --   exact le_of_lt h_x_from_right
+  --   exact le_of_lt h_x_gt_zero
 
 /-- The Heaviside function is not continuous (at `a = 0`). -/
-example : ¬ IsContinuousAt Set.univ Heaviside 0 trivial := by
-  intro h_cont
-  let ε := (1:ℝ)/2
-  have h0 : ε > 0 := by positivity
-  choose δ δ_pos hδ using h_cont ε h0
-  let x := -δ/2
-  have h1 : x < 0 := by
-    apply div_neg_of_neg_of_pos (neg_lt_zero.mpr δ_pos) zero_lt_two
-  have h3 : |x - 0| < δ := by
-    simp
-    rewrite [abs_div, abs_neg, abs_of_nonneg, abs_of_nonneg]
-    apply (div_lt_self δ_pos one_lt_two)
-    exact zero_le_two
-    exact le_of_lt δ_pos
-  have h4 : |Heaviside x - Heaviside 0| ≥ ε := by
-    simp[h1]
-    norm_num
-  have h5 : |Heaviside x - Heaviside 0| < ε := by
-    rewrite [abs_sub_comm]
-    apply hδ
-    exact trivial
-    rewrite [abs_sub_comm]
-    exact h3
-  have h6 : |Heaviside x - Heaviside 0| < |Heaviside x - Heaviside 0| := lt_of_lt_of_le h5 h4
-  apply lt_irrefl |Heaviside x - Heaviside 0| h6
+example : ¬IsContinuousAt Set.univ (fun x ↦ Heaviside x) ⟨0, trivial⟩ := by
+  -- We proof by contradiction, so we assume that the function is continuous
+  -- and show that this leads to a `False` truth-value.
+  intro h_is_continuous
 
+  let ε := (1:ℝ)/2
+  choose δ δ_pos hδ using h_is_continuous ε (by positivity)
+
+  let x := -δ/2
+  have h_x_smaller_zero : x < 0 := by dsimp [x]; linarith
+  have h_x_smaller_delta : x < δ := by dsimp [x]; linarith
+  have h_x_smaller_delta' : |x| < δ := by
+    dsimp [x]
+    simp only [abs_lt]
+    constructor
+    · linarith
+    · linarith
+
+  -- Construct contradiction
+  have h_heaviside : |Heaviside x  - Heaviside 0| = 1 := by
+    simp [Heaviside, h_x_smaller_zero]
+
+  have h_heaviside_ε : |Heaviside x - Heaviside 0| < ε := by
+    simp [Heaviside] at hδ
+    simp
+    exact hδ x h_x_smaller_delta'
+
+  have h_blow_up_math : 1 < 1/2 := by
+    -- replace `1` by `|Heaviside x - Heaviside 0|`
+    -- replace `1/2` by `ε`
+    sorry
+
+  -- Apply contradiction
+  exact absurd h_blow_up_math (by norm_num)
+
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- TODO from hereon
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 -- # Equivalence of continuity and left- and right-continuity
