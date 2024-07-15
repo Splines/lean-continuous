@@ -84,8 +84,8 @@ example : ¬IsContinuousAt Set.univ (fun x ↦ Heaviside x) ⟨0, trivial⟩ := 
     exact hδ x h_x_smaller_delta'
 
   have h_blow_up_math : 1 < 1/2 := by
-    -- replace `1` by `|Heaviside x - Heaviside 0|`
-    -- replace `1/2` by `ε`
+    -- replace `1` by `|Heaviside x - Heaviside 0|` (`h_heaviside`)
+    -- use the fact that `|Heaviside x - Heaviside 0| < ε` (`h_heaviside_ε`)
     sorry
 
   -- Apply contradiction
