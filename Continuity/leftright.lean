@@ -144,16 +144,16 @@ theorem LeftRightContinuousIffIsContinuous
       apply lt_of_lt_of_le h_x_δ_criterion
       apply min_le_left
 
-    -- x ≤ a
+    -- x ≥ a
     · push_neg at h_a_value
       by_cases h_a_value' : x = a
       -- x = a
       · rewrite [h_a_value']
         simp [abs_zero, h_εbigger0]
       -- x > a (use right-continuity)
-      · have h_x_smaller_a : x > a := by
+      · have h_x_bigger_a : x > a := by
           push_neg at h_a_value'
           exact lt_of_le_of_ne h_a_value (id (Ne.symm h_a_value'))
-        apply hδ₂_prop x h_x_smaller_a
+        apply hδ₂_prop x h_x_bigger_a
         apply lt_of_lt_of_le h_x_δ_criterion
         apply min_le_right
