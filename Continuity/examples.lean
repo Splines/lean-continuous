@@ -241,9 +241,11 @@ theorem hyperbola_is_continuous_at_a_point
 
 
 /-
-Question: Can you prove this for `D = Set.univ` (i.e. `D` the set of all real numbers?)
-Hint: In Lean `1 / x` is also defined for `x = 0`.
+In Lean, 1/0 is defined as 0,
+which means that we can prove discontinuity of f : x ↦ 1/x in x = 0.
 -/
+
+
 example : ¬IsContinuousAt Set.univ (fun x ↦ 1/x) ⟨0, trivial⟩ := by
   -- We proof by contradiction, so we assume that the function is continuous
   -- and show that this leads to a `False` truth-value.
