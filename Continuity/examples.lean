@@ -239,13 +239,21 @@ theorem hyperbola_is_continuous_at_a_point
     _ = ε
       := by field_simp
 
+/--
+  You might ask yourself whether `fun x ↦ 1/x` is continuous at `a=0`.
+  From a mathematical point of view, we cannot give an answer as we've only
+  defined continuity at points `a ∈ D`, i.e. points in the domain of the function.
+  For `1/x`, we don't consider `ℝ` as the domain, but `ℝ \ {0}` since 1/0 is
+  not defined.
 
-/-
-In Lean, 1/0 is defined as 0,
-which means that we can prove discontinuity of f : x ↦ 1/x in x = 0.
--/
+  However, things are different in Lean4. Here, 1/0 is defined as 0 (see
+  the theorem `div_zero`). Therefore, it's possible to prove that `fun x ↦ 1/x`
+  is not continuous at `a=0` in Lean4. E.g. consider the sequence `1/n`, which
+  converges to `0` for `n → ∞`, but `1/(1/n) = n`, which diverges and in particular
+  is not equal to `1/0 = 0`.
 
-
+  Currently work in progress.
+--/
 example : ¬IsContinuousAt Set.univ (fun x ↦ 1/x) ⟨0, trivial⟩ := by
   -- We proof by contradiction, so we assume that the function is continuous
   -- and show that this leads to a `False` truth-value.
