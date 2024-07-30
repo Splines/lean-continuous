@@ -1,10 +1,20 @@
-# Continuous Functions in Lean4
-
-__By Felix Lentze & Dominic Plein as part of the [CompAssistedMath2024](https://github.com/matematiflo/CompAssistedMath2024) seminar by Florent Schaffhauser and Judith Ludwig at Heidelberg University.__
+<div align="center">
+    <h2 align="center"><strong>Continuous Functions
+    <br>— formalized in Lean4</strong></h2>
+    <p>
+        <i>A project by Dominic Plein (<a href="https://youtube.com/@splience">@Splience</a>) & Felix Lentze<br>in the course of a seminar on <a href="https://matematiflo.github.io/SoSe_2024/CompAssistedMath2024.html">computer-assisted maths</a>.</i>
+    </p>
+    <a href="https://youtu.be/BZjAghqKOjI">
+        <img src="https://github.com/user-attachments/assets/39769109-54ea-4a01-a9ac-99fd7aa2ed5d"
+        width="550px" alt="Thumbnail of the linked YouTube video"/>
+    </a><br>
+    <strong><a href="https://youtu.be/BZjAghqKOjI">YouTube Video</a></strong>
+</div>
 
 > [!warning]
 > This is a research project and not stable code. We also don't maintain this code in the long run. It's mainly for educational purposes and for us to learn Lean4. Nevertheless, you might still find it useful to get started with Lean4 in the context of continuous functions.
 
+<br>
 
 ## 🌟 About
 
