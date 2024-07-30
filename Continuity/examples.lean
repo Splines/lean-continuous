@@ -239,51 +239,10 @@ theorem hyperbola_is_continuous_at_a_point
     _ = ε
       := by field_simp
 
-/--
-  You might ask yourself whether `fun x ↦ 1/x` is continuous at `a=0`.
-  From a mathematical point of view, we cannot give an answer as we've only
-  defined continuity at points `a ∈ D`, i.e. points in the domain of the function.
-  For `1/x`, we don't consider `ℝ` as the domain, but `ℝ \ {0}` since 1/0 is
-  not defined.
+/-- The function `x ↦ 1/x` is continuous. -/
+theorem hyperbola_is_continuous
+    (D : Set ℝ) (h_0notinD : 0 ∉ D)
+    : IsContinuous D (fun x ↦ 1/x) := by
 
-  However, things are different in Lean4. Here, 1/0 is defined as 0 (see
-  the theorem `div_zero`). Therefore, it's possible to prove that `fun x ↦ 1/x`
-  is not continuous at `a=0` in Lean4. E.g. consider the sequence `1/n`, which
-  converges to `0` for `n → ∞`, but `1/(1/n) = n`, which diverges and in particular
-  is not equal to `1/0 = 0`.
-
-  Currently work in progress.
---/
-example : ¬IsContinuousAt Set.univ (fun x ↦ 1/x) ⟨0, trivial⟩ := by
-  -- We proof by contradiction, so we assume that the function is continuous
-  -- and show that this leads to a `False` truth-value.
-  intro h_is_continuous
-
-  let ε := (1:ℝ)/2
-  choose δ δ_pos hδ using h_is_continuous ε (by positivity)
-
-  let x := δ/2
-  have h_x_smaller_zero : x > 0 := by dsimp [x]; linarith
-  have _h_x_smaller_delta : x < δ := by dsimp [x]; linarith
-  have h_x_smaller_delta' : |x| < δ := by
-    dsimp [x]
-    simp only [abs_lt]
-    constructor
-    · linarith
-    · linarith
-
-  -- Construct contradiction
-  have h1 : |1/x  - 1/0| = 2/δ := by
-    sorry
-
-  have h2 : |1/x - 1/0| < ε := by sorry
-    --simp at hδ
-    --simp
-    --exact hδ x h_x_smaller_delta'
-  have h3 : 2/δ < ε := by
-    calc 2/δ = |1/x  - 1/0| := by sorry
-      _ < ε := h2
-  have h4 : δ > 4 := by sorry
-  have h5 : δ > 4 ∧ δ > 0 := by sorry
-
-  exact absurd h5 (not_and_of_not_left _ (by sorry))
+  intro a
+  exact hyperbola_is_continuous_at_a_point D h_0notinD a
