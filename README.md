@@ -37,6 +37,8 @@ See [this guide](https://lean-lang.org/lean4/doc/setup.html) for how to install 
 
 Then run `lake exec cache get` in the root of this project. Don't run `lake update` as we want to stick with the specific version of Lean specified pinned via the `lake-manifest.json` file.
 
+To update dependencies in a Lean project, see [this nice writeup](https://malv.in/posts/2024-12-09-howto-update-lean-dependencies.html).
+
 We highly recommend to use Visual Studio Code as your editor as the Lean4 community has developed a great extension for it. It's included as "recommended extension" to this workspace. [Use `Extensions: Show Recommended Extensions`](https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions) to install it.
 
 

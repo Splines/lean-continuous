@@ -171,7 +171,9 @@ lemma element_not_zero_if_set_has_no_zero
 lemma reverse_triangle_inequality (a b : ℝ) : |a| - |b| ≤ |a + b| := by
   let m : ℝ := a + b
   let n : ℝ := -b
-  have h_mn : m + n = a := by ring_nf
+  have h_mn : m + n = a := by
+    dsimp [m, n]
+    ring
   calc |a| - |b| = |m + n| - |n| := by rw [h_mn, abs_neg]
                _ ≤ |m| := by linarith [abs_add m n]
                _ = |a + b| := by rfl
@@ -224,14 +226,14 @@ theorem hyperbola_is_continuous_at_a_point
       := by rw [abs_div, abs_mul, abs_sub_comm]
 
     _ < δ / (|a'| * |x'|)
-      := (div_lt_div_right (by positivity)).mpr h_xδ_criterion
+      := (div_lt_div_iff_of_pos_right (by positivity)).mpr h_xδ_criterion
 
     _ < δ / (|a'| * (|a'| / 2))
-      := (div_lt_div_left h_δbigger0 (by positivity) (by positivity)).mpr
+      := (div_lt_div_iff_of_pos_left h_δbigger0 (by positivity) (by positivity)).mpr
         h_x_bigger_a_with_factor
 
     _ ≤ (ε * |a'|^2 / 2) / (|a'| * (|a'| / 2))
-      := (div_le_div_right (by positivity)).mpr h_δsmallerfirst
+      := (div_le_div_iff_of_pos_right (by positivity)).mpr h_δsmallerfirst
 
     _ = (ε * |a'|^2 / 2) / (|a'|^2 / 2)
       := by ring_nf

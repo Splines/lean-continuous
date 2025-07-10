@@ -29,7 +29,11 @@
     // Spell Checker
     //////////////////////////////////////
     "cSpell.language": "en,de-DE",
-    "cSpell.words": [],
+    "cSpell.words": [
+        "leanprover",
+        "mathlib",
+        "Paperproof"
+    ],
     //////////////////////////////////////
     // LaTeX
     //////////////////////////////////////

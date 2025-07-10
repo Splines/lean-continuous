@@ -1,0 +1,9 @@
+name = "Continuity"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.21.0"
+
+[[lean_lib]]
+name = "Continuity"
